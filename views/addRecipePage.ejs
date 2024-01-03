@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>DishCoveries | Add a Recipe</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="css/animate.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+
+  <link rel="stylesheet" href="css/aos.css">
+
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/icomoon.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a style="font-size: 35px;" class="navbar-brand" href="/">DishCoveries</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+      </button>
+
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a href="/contributorHomepage" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Browse Recipes</a></li>
+          <li class="nav-item"><a href="/myRecipes" class="nav-link">My Recipes</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Profile</a></li>
+          <li class="nav-item active"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- END nav -->
+
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-end justify-content-center">
+        <div class="col-md-9 ftco-animate text-center mb-4">
+          <h1 class="mb-2 bread">Add a Recipe</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="ftco-section ftco-wrap-about">
+    <div class="container">
+      <section class="ftco-section ftco-wrap-about">
+        <div class="container">
+          <form action="/createRecipe" method="post" enctype="multipart/form-data">
+
+            <input value="<%=user.id%>" hidden>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label for="recipeName"><strong>Recipe Name</strong></label>
+                <input type="text" class="form-control" id="recipeName" name="recipeName" placeholder="Pan-Grilled Bangus" required>
+              </div>
+              <div class="col-md-3">
+                <label for="cuisine"><strong>Cuisine</strong></label>
+                <select class="form-control" id="cuisine" name="cuisine" required>
+                  <option value="American">American</option>
+                  <option value="Caribbean">Caribbean</option>
+                  <option value="Chinese">Chinese</option>
+                  <option value="French">French</option>
+                  <option value="Greek">Greek</option>
+                  <option value="Indian">Indian</option>
+                  <option value="Italian">Italian</option>
+                  <option value="Japanese">Japanese</option>
+                  <option value="Korean">Korean</option>
+                  <option value="Mediterranean">Mediterranean</option>
+                  <option value="Mexican">Mexican</option>
+                  <option value="Moroccan">Moroccan</option>
+                  <option value="Spanish">Spanish</option>
+                  <option value="Thai">Thai</option>
+                  <option value="Vietnamese">Vietnamese</option>
+
+                </select>
+              </div>
+
+              <div class="col-md-3">
+                <label for="category"><strong>Category</strong></label>
+                <select class="form-control" id="category" name="category" required>
+                  <option value="Breakfast">Breakfast</option>
+                  <option value="Lunch">Lunch</option>
+                  <option value="Dinner">Dinner</option>
+                  <option value="Appetizers">Appetizers</option>
+                  <option value="Desserts">Desserts</option>
+                  <option value="Beverages">Beverages</option>
+                  <option value="Salads">Salads</option>
+                  <option value="Soups">Soups</option>
+                  <option value="Snacks">Snacks</option>
+                  <option value="Vegetarian">Vegetarian</option>
+                  <option value="Vegan">Vegan</option>
+                  <option value="Gluten-Free">Gluten-Free</option>
+                  <option value="Low-Carb">Low-Carb</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label for="recipeDescription"><strong>Recipe Description</strong></label>
+                <textarea class="form-control" id="recipeDescription" name="recipeDescription" rows="5" placeholder="Enter a brief description of the recipe"></textarea>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label for="ingredients"><strong>Ingredients</strong></label>
+                <div id="ingredientContainer">
+                  <div class="ingredient-input">
+                  </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-primary mt-2" onclick="addIngredient()">Add Ingredient</button>
+              </div>
+              <div class="col-md-6">
+                <label for="instructions"><strong>Instructions</strong></label>
+                <div id="instructionContainer">
+                </div>
+                <button type="button" class="btn btn-sm btn-primary mt-2" onclick="addInstruction()">Add Instruction</button>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label for="prepTime"><strong>Preparation Time (in minutes)</strong></label>
+                <input type="number" class="form-control" id="prepTime" name="prepTime" required>
+              </div>
+              <div class="col-md-6">
+                <label for="cookTime"><strong>Cooking Time (in minutes)</strong></label>
+                <input type="number" class="form-control" id="cookTime" name="cookTime" required>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label for="servings"><strong>Number of Servings</strong></label>
+                <input type="number" class="form-control" id="servings" name="servings" required>
+              </div>
+              <div class="col-md-6">
+                <label for="difficulty"><strong>Difficulty Level</strong></label>
+                <select class="form-control" id="difficulty" name="difficulty" required>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label for="recipeImage"><strong>Recipe Image</strong></label>
+                <input type="file" class="form-control" id="recipeImage" name="recipeImage" accept="image/*" required>
+              </div>
+            </div>
+
+
+            <!-- Add more fields as needed -->
+
+            <button type="submit" class="btn btn-primary">Add Recipe</button>
+          </form>
+        </div>
+      </section>
+
+
+
+      <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container">
+    
+          <div class="row">
+            <div class="col-md-12 text-center">
+    
+              <p>
+                Copyright &copy;<script>
+                  document.write(new Date().getFullYear());
+                </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="" target="_blank">4D</a></p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+
+      <!-- loader -->
+      <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+          <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+          <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg></div>
+
+
+      <script src="js/jquery.min.js"></script>
+      <script src="js/jquery-migrate-3.0.1.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery.easing.1.3.js"></script>
+      <script src="js/jquery.waypoints.min.js"></script>
+      <script src="js/jquery.stellar.min.js"></script>
+      <script src="js/owl.carousel.min.js"></script>
+      <script src="js/jquery.magnific-popup.min.js"></script>
+      <script src="js/aos.js"></script>
+      <script src="js/jquery.animateNumber.min.js"></script>
+      <script src="js/scrollax.min.js"></script>
+      <script src="js/main.js"></script>
+      <script>
+        var ingredientCounter = 1;
+        var instructionCounter = 1;
+
+        function addIngredient() {
+          var container = document.getElementById('ingredientContainer');
+          var input = document.createElement('div');
+          input.classList.add('ingredient-input');
+          input.innerHTML = '<div class="input-group" style="margin-top: 10px;">' +
+            '<span class="input-group-text">' + (ingredientCounter++) + '</span>' +
+            '<input type="text" class="form-control" name="ingredients[]" placeholder="Ingredient" required>' +
+            '<div class="input-group-append">' +
+            '<button type="button" class="btn btn-sm btn-danger" onclick="removeElement(this)">&times;</button>' +
+            '</div>' +
+            '</div>';
+          container.appendChild(input);
+        }
+
+        function addInstruction() {
+          var container = document.getElementById('instructionContainer');
+          var input = document.createElement('div');
+          input.classList.add('instruction-input');
+          input.innerHTML = '<div class="input-group" style="margin-top: 10px;">' +
+            '<span class="input-group-text">' + (instructionCounter++) + '</span>' +
+            '<input type="text" class="form-control" name="instructions[]" placeholder="Instruction" required>' +
+            '<div class="input-group-append">' +
+            '<button type="button" class="btn btn-sm btn-danger" onclick="removeElement(this)">&times;</button>' +
+            '</div>' +
+            '</div>';
+          container.appendChild(input);
+        }
+
+        function removeElement(element) {
+          var container = element.closest('.ingredient-input') || element.closest('.instruction-input');
+          container.parentNode.removeChild(container);
+
+          // Reset counters when an element is removed
+          ingredientCounter = 1;
+          instructionCounter = 1;
+
+          // Update the counter labels
+          updateCounterLabels();
+        }
+
+        function updateCounterLabels() {
+          var ingredientInputs = document.querySelectorAll('.ingredient-input .input-group-text');
+          var instructionInputs = document.querySelectorAll('.instruction-input .input-group-text');
+
+          ingredientInputs.forEach(function(label, index) {
+            label.textContent = index + 1;
+          });
+
+          instructionInputs.forEach(function(label, index) {
+            label.textContent = index + 1;
+          });
+        }
+      </script>
+
+
+
+</body>
+
+</html>
