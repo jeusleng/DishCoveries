@@ -20,13 +20,14 @@ exports.registerUser = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query = 'INSERT INTO users (firstName, lastName, gender, bdate, address, userType, password, email, specialty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    // Updated query to include the 'status' column with a default value of 'Active'
+    const query = 'INSERT INTO users (firstName, lastName, gender, bdate, address, userType, password, email, specialty, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, "Active")';
+    
     pool.query(query, [firstName, lastName, gender, bdate, address, userType, hashedPassword, email, specialty], (error, results) => {
       if (error) {
         console.error(error);
         return res.redirect('/register');
       }
-
 
       const queryUser = 'SELECT * FROM users WHERE email = ?';
       pool.query(queryUser, [email], (errorUser, resultsUser) => {
@@ -37,9 +38,7 @@ exports.registerUser = async (req, res) => {
 
         const user = resultsUser[0];
 
-
         req.session.user = user;
-
 
         if (userType === 'contributor') {
           res.redirect('/contributorHomepage');
