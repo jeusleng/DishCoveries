@@ -39,7 +39,7 @@
           <li class="nav-item"><a href="" class="nav-link">Browse Recipes</a></li>
           <li class="nav-item active"><a href="" class="nav-link">My Recipes</a></li>
           <li class="nav-item"><a href="" class="nav-link">Profile</a></li>
-          <li class="nav-item"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
+          <li class="nav-item cta"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
         </ul>
       </div>
     </div>
@@ -68,6 +68,12 @@
 
               <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
                 <div class="row no-gutters d-flex align-items-stretch">
+                  <% if (recipes.length === 0) { %>
+                  <!-- Display message when the user has no recipes -->
+                  <div class="col-md-12 text-center">
+                    <p><strong>You haven't added any recipes yet.</strong></p>
+                  </div>
+                  <% } else { %>
                   <!-- Use a forEach loop to dynamically generate recipe content -->
                   <% recipes.forEach(recipe => { %>
                   <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
@@ -87,12 +93,36 @@
                             </p>
                           </div>
 
-                          <p><a href="#" class="btn btn-primary">View More</a></p>
+                          <p><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>">View More</a></p>
                         </div>
                       </div>
                     </div>
                   </div>
                   <% }); %>
+                  <% } %>
+                  <!-- Modal -->
+                  <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="recipeModalLabel" style="font-weight: bold;"></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <!-- Display recipe details dynamically using JavaScript -->
+                          <p><strong>Name:</strong> <span id="recipeName"></span></p>
+                          <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
+                          <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
+                          <img id="recipeImage" class="img-fluid" alt="Recipe Image">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -100,29 +130,6 @@
           </div>
         </div>
       </div>
-      <!-- Modal -->
-<div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="recipeModalLabel"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
-        <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
-        <!-- Add more details as needed -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a id="editButton" class="btn btn-primary">Edit</a>
-        <a id="deleteButton" class="btn btn-danger">Delete</a>
-      </div>
-    </div>
-  </div>
-</div>
 
     </div>
   </section>
@@ -165,7 +172,22 @@
   <script src="js/main.js"></script>
 
 
+  <script>
+    $('#recipeModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget);
+      var recipeName = button.data('recipe-name');
+      var cuisine = button.data('cuisine');
+      var difficulty = button.data('difficulty');
+      var recipeImage = button.data('recipe-image');
 
+      var modal = $(this);
+      modal.find('.modal-title').text(recipeName);
+      modal.find('#recipeName').text(recipeName);
+      modal.find('#cuisine').text(cuisine);
+      modal.find('#difficulty').text(difficulty);
+      modal.find('#recipeImage').attr('src', recipeImage);
+    });
+  </script>
 </body>
 
 </html>
