@@ -259,4 +259,25 @@ exports.updateStatus = (req, res) => {
   });
 };
 
+exports.getMyProfile = (req, res) => {
+  const user = req.session.user;
 
+  // Check if the user is logged in
+  if (!user) {
+    return res.redirect('/');
+  }
+
+  // Query to retrieve user details
+  const query = 'SELECT * FROM users WHERE id = ?';
+
+  pool.query(query, [user.id], (error, results) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    const userProfile = results[0]; // Assuming there is only one user with the given ID
+
+    res.render('myProfile', { user: userProfile });
+  });
+};

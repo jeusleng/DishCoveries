@@ -44,7 +44,9 @@ router.get('/myRecipes', islogin, controller.getMyRecipes);
 
 router.get('/recipeRequests', islogin, controller.getRecipeRequests);
 router.get('/userManagement', islogin, controller.userManagement);
+router.get('/myProfile', islogin, controller.getMyProfile); 
 
 router.post('/updateUserStatus', islogin, controller.updateStatus);
+
 
 module.exports = router;

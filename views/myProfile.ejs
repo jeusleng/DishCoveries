@@ -1,0 +1,52 @@
+<!-- views/myProfile.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Add your head content here -->
+  <title>My Profile</title>
+  <!-- Add your stylesheets and other head elements here -->
+</head>
+
+<body>
+
+  <!-- Your navigation bar or header section goes here -->
+
+  <section class="profile-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2>Hi, <%= user.firstName %> <%= user.lastName %></h2>
+        </div>
+      </div>
+<a href="/contributorHomepage">Back to Home</a>
+      <!-- Display user details -->
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <h4>User Details:</h4>
+          <p><strong>First Name:</strong> <%= user.firstName %></p>
+          <p><strong>Last Name:</strong> <%= user.lastName %></p>
+          <p><strong>Gender:</strong> <%= user.gender %></p>
+          <p><strong>Birthdate:</strong> <%= user.bdate %></p>
+          <p><strong>Email:</strong> <%= user.email %></p>
+        </div>
+        <div class="col-md-6">
+          <h4>Additional Information:</h4>
+          <p><strong>Address:</strong> <%= user.address %></p>
+          <p><strong>User Type:</strong> <%= user.userType %></p>
+          <p><strong>Specialty:</strong> <%= user.specialty %></p>
+          <p><strong>Status:</strong> <%= user.status %></p>
+        </div>
+      </div>
+
+      <!-- You can add more sections or customize the layout based on your needs -->
+
+    </div>
+  </section>
+
+  <!-- Your footer section goes here -->
+
+</body>
+
+</html>
