@@ -240,7 +240,24 @@ exports.getMyRecipes = (req, res) => {
     res.render('myRecipes', { user, recipes });
   });
 };
+exports.browseRecipes = (req, res) => {
+  const query = `
+    SELECT recipes.*, users.firstName AS contributorName, users.lastName
+    FROM recipes 
+    JOIN users ON recipes.userID = users.id
+  `;
 
+  pool.query(query, [], (error, results) => {
+    if (error) {
+      console.error('Database query error:', error);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    const recipes = results;
+
+    res.render('myBrowser', { recipes });
+  });
+};
 exports.updateStatus = (req, res) => {
   const id = req.body.id;
   const status = req.body.status;
@@ -281,3 +298,47 @@ exports.getMyProfile = (req, res) => {
     res.render('myProfile', { user: userProfile });
   });
 };
+exports.updateProfile = (req, res) => {
+  const user = req.session.user;
+
+  // Check if the user is logged in
+  if (!user) {
+    return res.redirect('/');
+  }
+
+  const updatedProfile = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    gender: req.body.gender,
+    email: req.body.email,
+    address: req.body.address,
+    specialty: req.body.specialty,
+  };
+
+  const userId = user.id;
+  const updateQuery = 'UPDATE users SET ? WHERE id = ?';
+
+  pool.query(updateQuery, [updatedProfile, userId], (error, result) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+  
+    res.json({ user: updatedProfile });
+  });
+};
+
+// exports.updateProfile = (req, res)=>{
+//   let firstName = req.body.firstName
+//   let lastName = req.body.lastName
+//   let gender = req.body.gender
+//   let email = req.body.email
+//   let  address = req.body.address
+//   let  specialty = req.body.specialty
+
+//   sql = "UPDATE `users` SET `firstName`='?',`lastName`='?',`gender`='?',`address`='?',`specialty`='?' WHERE id = ?"
+//   pool.query(sql, [firstName, lastName, gender, email, address, specialty, id], (err,result)=>{
+
+//   })
+// }

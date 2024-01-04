@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>DishCoveries | Add a Recipe</title>
+  <title>DishCoveries | Browse Recipe</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
 
@@ -36,8 +36,8 @@
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a href="/contributorHomepage" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="/myBrowser" class="nav-link">Browse Recipes</a></li>
-          <li class="nav-item active"><a href="" class="nav-link">My Recipes</a></li>
+          <li class="nav-item active"><a href="" class="nav-link">Browse Recipes</a></li>
+          <li class="nav-item "><a href="/myRecipes" class="nav-link">My Recipes</a></li>
           <li class="nav-item"><a href="/myProfile" class="nav-link">Profile</a></li>
           <li class="nav-item cta"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
         </ul>
@@ -51,114 +51,115 @@
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate text-center mb-4">
-          <h1 class="mb-2 bread">My Recipes</h1>
+          <h1 class="mb-2 bread">Browse Recipes</h1>
           <p class="breadcrumbs"><span class="mr-2">Welcome to your personalized recipe collection! On this page, you can manage, view, and edit all the recipes you've contributed. This is your space to showcase your culinary creations and keep track of your favorite recipes. Feel free to explore, update, and share your delicious recipes with the DishCoveries community.</span>
           </p>
         </div>
       </div>
     </div>
   </section>
-
   <section class="ftco-section">
     <div class="container">
-      <div class="ftco-search">
-        <div class="col-md-12 nav-link-wrap">
-          <div class="col-md-12 tab-wrap">
+        <div class="ftco-search">
+            <div class="col-md-12 nav-link-wrap">
+              <div class="col-md-12 tab-wrap">
+    
+         
             <div class="tab-content" id="v-pills-tabContent">
-
               <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
                 <div class="row no-gutters d-flex align-items-stretch">
                   <% if (recipes.length === 0) { %>
-                  <!-- Display message when the user has no recipes -->
-                  <div class="col-md-12 text-center">
-                    <p><strong>You haven't added any recipes yet.</strong></p>
-                  </div>
+                    <div class="col-md-12 text-center">
+                      <p><strong>You haven't added any recipes yet.</strong></p>
+                    </div>
                   <% } else { %>
-                  <!-- Use a forEach loop to dynamically generate recipe content -->
-                  <% recipes.forEach(recipe => { %>
-                  <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
-                    <div class="menus d-sm-flex ftco-animate align-items-stretch">
-                      <div class="menu-img img" style="background-image: url('/uploads/<%= recipe.recipeImage %>');"></div>
-
-                      <div class="text d-flex align-items-center">
-                        <div>
-                          <div class="d-flex">
-                            <div>
-                              <h3><strong><%= recipe.recipeName %></strong></h3>
-                            </div>
-                          </div>
-                          <div>
-                            <p>
-                              <strong><%= recipe.cuisine %></strong> | <%= recipe.difficulty %>
+                    <!-- Use a forEach loop to dynamically generate recipe content -->
+                    <% recipes.forEach(recipe => { %>
+                        <div class="col-md-12 col-lg-3 d-flex align-self-stretch">
+                          <div class="menus d-sm-flex ftco-animate align-items-stretch">
+                            <!-- Place the menu-img div inside the text div for better alignment -->
+                            <div class=" d-flex align-items-center flex-column">
+                              <!-- Use the img tag to display the image -->
+                              <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px;">
+                              <div class="mt-2">
+                                <h5><strong><%= recipe.recipeName %></strong></h5>
+                                <p><%= recipe.contributorName %> <%= recipe.lastName %></p>
+                                  <p><strong> <%= recipe.cuisine %> </strong> | <%= recipe.difficulty %> </p> 
+                                 
+                                <p>
+                                <i class="fa fa-cutlery"></i>  <%= recipe.prepTime %>  <i class="fa fa-clock-o"></i>  <%= recipe.cookTime %>
                             </p>
-                          </div>
-
-                          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
-                            View More
-                          </a>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <% }); %>
-                  <% } %>
-                  <!-- Modal -->
-                  <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 style="font-weight: bold;">Recipe Details</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <!-- Circular image on the left -->
-                            <div class="col-md-4 text-center">
-                              <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
-                                <img id="recipeImage" class="img-fluid" alt="Recipe Image" style="width: 100%; ">
                               </div>
-                            </div>
-                            <!-- Recipe details on the right -->
-                            <div class="col-md-8">
-                              <p><strong>Name:</strong> <span id="recipeName"></span></p>
-                              <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
-                              <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
-                            </div>
-                          </div>
-                          <!-- Ingredients and instructions below -->
-                          <div class="row mt-3">
-                            <div class="col-md-12">
-                              <h6>Ingredients:</h6>
-                              <p id="ingredients"></p>
-                            </div>
-                          </div>
-                          <div class="row mt-3">
-                            <div class="col-md-12">
-                              <h6>Instructions:</h6>
-                              <p id="instructions"></p>
+                              
+                              <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal"
+                                data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>"
+                                data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>"
+                                data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
+                                View More
+                              </a>
                             </div>
                           </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                      <% }); %>
+                      
+                   
+                  <% } %>
                 </div>
               </div>
-
+            </div>
+        </div>
+        </div>
+        </div>
+     
+    </div>
+  </section>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 style="font-weight: bold;">Recipe Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Circular image on the left -->
+            <div class="col-md-4 text-center">
+              <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
+                <img id="recipeImage" class="img-fluid" alt="Recipe Image" style="width: 100%; ">
+              </div>
+            </div>
+            <!-- Recipe details on the right -->
+            <div class="col-md-8">
+              <p><strong>Name:</strong> <span id="recipeName"></span></p>
+              <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
+              <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
+            </div>
+          </div>
+          <!-- Ingredients and instructions below -->
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <h6>Ingredients:</h6>
+              <p id="ingredients"></p>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <h6>Instructions:</h6>
+              <p id="instructions"></p>
             </div>
           </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
-
     </div>
-  </section>
+  </div>
+  
 
   <footer class="ftco-footer ftco-bg-dark ftco-section">
     <div class="container">
@@ -236,7 +237,8 @@
     });
 </script>
 
-
+  
+  
 </body>
 
 </html>
