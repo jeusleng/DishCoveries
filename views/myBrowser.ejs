@@ -52,7 +52,9 @@
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate text-center mb-4">
           <h1 class="mb-2 bread">Browse Recipes</h1>
-          <p class="breadcrumbs"><span class="mr-2">Welcome to your personalized recipe collection! On this page, you can manage, view, and edit all the recipes you've contributed. This is your space to showcase your culinary creations and keep track of your favorite recipes. Feel free to explore, update, and share your delicious recipes with the DishCoveries community.</span>
+          <p class="breadcrumbs"><span class="mr-2">a culinary haven where you can explore a diverse array of delectable recipes contributed by our talented community of users. Whether you're a seasoned chef seeking inspiration or a food enthusiast eager to discover new flavors, this page is your gateway to a world of gastronomic delights.
+
+          </span>
           </p>
         </div>
       </div>
@@ -197,6 +199,7 @@
   <script src="js/jquery.animateNumber.min.js"></script>
   <script src="js/scrollax.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <script>
     $('#recipeModal').on('show.bs.modal', function(event) {
@@ -235,6 +238,38 @@
         instructionsHtml += '</ol>';
         modal.find('#instructions').html(instructionsHtml);
     });
+
+    $(document).ready(function() {
+    // Attach click event handler to the bookmark button
+    $('.bookmark-btn').click(function(e) {
+        e.preventDefault();
+        
+        // Get the recipe ID from the data-recipe-id attribute
+        var recipeID = $(this).data('recipe-id');
+        
+        // Send an AJAX request to the server
+        $.ajax({
+            url: '/addBookmark', // Change this URL to match your server endpoint
+            method: 'POST',
+            data: { recipeID: recipeID },
+            success: function(response) {
+                // Handle the response from the server
+                console.log(response);
+                if (response.success) {
+                    // Update the UI or provide feedback to the user
+                    console.log('Bookmark added successfully');
+                } else {
+                    console.error('Failed to add bookmark');
+                }
+            },
+            error: function(error) {
+                // Handle the error
+                console.error(error);
+            }
+        });
+    });
+});
+
 </script>
 
   
