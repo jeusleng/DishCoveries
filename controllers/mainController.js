@@ -40,9 +40,9 @@ exports.registerUser = async (req, res) => {
 
         req.session.user = user;
 
-        if (userType === 'contributor') {
+        if (userType === 'Contributor') {
           res.redirect('/contributorHomepage');
-        } else if (userType === 'viewer') {
+        } else if (userType === 'Viewer') {
           res.redirect('/viewerHomepage');
         } else if (userType === 'admin') {
           res.redirect('/adminHomepage');
@@ -78,9 +78,9 @@ exports.loginUser = async (req, res) => {
         if (isPasswordValid) {
           req.session.user = user;
 
-          if (user.userType === 'contributor') {
+          if (user.userType === 'Contributor') {
             res.redirect('/contributorHomepage');
-          } else if (user.userType === 'viewer') {
+          } else if (user.userType === 'Viewer') {
             res.redirect('/viewerHomepage');
           } else if (user.userType === 'admin') {
             res.redirect('/adminHomepage');
@@ -107,7 +107,7 @@ exports.viewerHomepage = (req, res) => {
   const userType = req.session.user ? req.session.user.userType : null;
 
 
-  if (userType === 'viewer') {
+  if (userType === 'Viewer') {
     res.render('viewerHomepage');
   } else {
     res.redirect('/');
