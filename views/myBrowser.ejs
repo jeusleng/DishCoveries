@@ -83,7 +83,7 @@
                           <div class="d-flex align-items-center flex-column">
                             <br>
                             <!-- Use the img tag to display the image -->
-                            <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px;">
+                            <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
                             <div class="mt-2">
                               <h5><strong><%= recipe.recipeName %></strong></h5>
                               <p><%= recipe.contributorName %> <%= recipe.lastName %></p>
@@ -102,6 +102,7 @@
                           </div>
                         </div>
                       </div>
+                      
                     <% }); %>
                     
                       
