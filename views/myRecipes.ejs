@@ -209,7 +209,7 @@
 
         // Convert the comma-separated strings to arrays
         var ingredients = ingredientsString ? ingredientsString.split(',').map(ingredient => ingredient.trim()) : [];
-        var instructions = instructionsString ? instructionsString.split('.').map(instruction => instruction.trim()) : [];
+        var instructions = instructionsString ? instructionsString.split('.,').map(instruction => instruction.trim()) : [];
 
         var modal = $(this);
         modal.find('.modal-title').text(recipeName);
