@@ -40,15 +40,16 @@ exports.registerUser = async (req, res) => {
 
         req.session.user = user;
 
-        if (userType === 'contributor') {
-          res.redirect('/contributorHomepage');
-        } else if (userType === 'viewer') {
-          res.redirect('/viewerHomepage');
-        } else if (userType === 'admin') {
-          res.redirect('/adminHomepage');
-        } else {
-          res.redirect('/');
-        }
+        // if (userType === 'contributor') {
+        //   res.redirect('/contributorHomepage');
+        // } else if (userType === 'viewer') {
+        //   res.redirect('/viewerHomepage');
+        // } else if (userType === 'admin') {
+        //   res.redirect('/adminHomepage');
+        // } else {
+        //   res.redirect('/');
+        // }
+        res.redirect('/');
       });
     });
   } catch (error) {
