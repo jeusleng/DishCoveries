@@ -8849,6 +8849,7 @@ h1, h2, h3, h4, h5,
   margin-bottom: 1em; }
 
 .menus {
+  text-align: center;
   width: 100%;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
