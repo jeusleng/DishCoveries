@@ -183,9 +183,8 @@ exports.createRecipe = (req, res) => {
 
 
 exports.getRecipeRequests = (req, res) => {
-
   const user = req.session.user;
-  const query = 'SELECT * FROM recipes';
+  const query = 'SELECT recipes.*, users.firstName, users.lastName FROM recipes JOIN users ON recipes.userID = users.id';
 
   pool.query(query, (error, results) => {
     if (error) {
@@ -195,10 +194,11 @@ exports.getRecipeRequests = (req, res) => {
 
     const recipes = results;
 
-
     res.render('recipeRequests', { user, recipes, successMessages: req.flash('success') });
   });
 };
+
+
 
 
 exports.userManagement = (req, res) => {
