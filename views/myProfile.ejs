@@ -35,11 +35,17 @@
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="/contributorHomepage" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="" class="nav-link">Browse Recipes</a></li>
+          <li class="nav-item"><a href="<%= user && user.userType === 'contributor' ? '/contributorHomepage' : '/viewerHomepage' %>" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="/myBrowser" class="nav-link">Browse Recipes</a></li>
+          <% if (user && user.userType == 'contributor') { %>
           <li class="nav-item "><a href="/myRecipes" class="nav-link">My Recipes</a></li>
+          <% } %>
           <li class="nav-item active"><a href="/myProfile" class="nav-link">Profile</a></li>
+          <% if (user && user.userType == 'contributor') { %>
           <li class="nav-item cta"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
+          <% } %>
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout  <i class="fa fa-sign-out"></i></a></li>
+
         </ul>
       </div>
     </div>
@@ -59,10 +65,17 @@
     </div>
   </section>
   
+  
+ 
   <section class="profile-section">
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
+          <% if (successMessage && successMessage.length > 0) { %>
+            <div class="alert alert-success" role="alert">
+                <%= successMessage[0] %>
+            </div>
+        <% } %>
           <div class="card">
             <div class="card-body">
               
@@ -72,19 +85,19 @@
                   <p><strong>First Name:</strong> <%= user.firstName %></p>
                   <p><strong>Last Name:</strong> <%= user.lastName %></p>
                   <p><strong>Gender:</strong> <%= user.gender %></p>
-                  <p><strong>Birthdate:</strong> <span id="birthdate"><%= new Date(user.bdate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></span></p>
+                  <!-- <p><strong>Birthdate:</strong> <span id="birthdate"><%= new Date(user.bdate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></span></p> -->
                   <p><strong>Email:</strong> <%= user.email %></p>
                 </div>
                 <div class="col-md-6">
                   <p><strong>Address:</strong> <%= user.address %></p>
                   <p><strong>User Type:</strong> <%= user.userType %></p>
-                  <p><strong>Specialty:</strong> <%= user.specialty %></p>
-                  <p><strong>Status:</strong> <%= user.status %></p>
+                  <!-- <p><strong>Specialty:</strong> <%= user.specialty %></p> -->
+                  <!-- <p><strong>Status:</strong> <%= user.status %></p> -->
                 </div>
               </div>
 
               <!-- Button to open edit modal -->
-              <button class="btn btn-primary mt-3" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button> <a href="/logout" class="btn btn-danger mt-3">Logout</a>
+              <button class="btn btn-primary mt-3" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button> 
 
             </div>
           </div>
@@ -123,10 +136,10 @@
                   </select>
                 </div>
               
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="newBdate">Birthdate:</label>
                   <input type="date" class="form-control" id="newBdate" name="bdate" value="<%= user.bdate %>" required>
-                </div>
+                </div> -->
               
                 <div class="form-group">
                   <label for="newEmail">Email:</label>
@@ -150,7 +163,7 @@
               
                 <div class="form-group">
                   <label for="newSpecialty">Specialty:</label>
-                  <input type="text" class="form-control" id="newSpecialty" name="specialty" value="<%= user.specialty %>" required>
+                  <input type="text" class="form-control" id="newSpecialty" name="specialty" value="<%= user.specialty %>" >
                 </div>
               
               

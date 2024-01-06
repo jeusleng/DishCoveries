@@ -5,6 +5,7 @@
   <title>DishCoveries | Add a Recipe</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -23,13 +24,16 @@
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a style="font-size: 35px;" class="navbar-brand" href="/contributorHomepage">DishCoveries</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> Menu
       </button>
 
@@ -40,19 +44,24 @@
           <li class="nav-item active"><a href="" class="nav-link">My Recipes</a></li>
           <li class="nav-item"><a href="/myProfile" class="nav-link">Profile</a></li>
           <li class="nav-item cta"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout  <i class="fa fa-sign-out"></i></a></li>
         </ul>
       </div>
     </div>
   </nav>
   <!-- END nav -->
 
-  <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');"
+    data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate text-center mb-4">
           <h1 class="mb-2 bread">My Recipes</h1>
-          <p class="breadcrumbs"><span class="mr-2">Welcome to your personalized recipe collection! On this page, you can manage, view, and edit all the recipes you've contributed. This is your space to showcase your culinary creations and keep track of your favorite recipes. Feel free to explore, update, and share your delicious recipes with the DishCoveries community.</span>
+          <p class="breadcrumbs"><span class="mr-2">Welcome to your personalized recipe collection! On this page, you
+              can manage, view, and edit all the recipes you've contributed. This is your space to showcase your
+              culinary creations and keep track of your favorite recipes. Feel free to explore, update, and share your
+              delicious recipes with the DishCoveries community.</span>
           </p>
         </div>
       </div>
@@ -67,95 +76,115 @@
             <div class="tab-content" id="v-pills-tabContent">
 
               <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
-                <div class="row no-gutters d-flex align-items-stretch">
-                  <% if (recipes.length === 0) { %>
-                  <!-- Display message when the user has no recipes -->
-                  <div class="col-md-12 text-center">
-                    <p><strong>You haven't added any recipes yet.</strong></p>
-                  </div>
-                  <% } else { %>
-                  <!-- Use a forEach loop to dynamically generate recipe content -->
-                  <% recipes.forEach(recipe => { %>
-                  <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
-                    <div class="menus d-sm-flex ftco-animate align-items-stretch">
-                      <div class="menu-img img" style="background-image: url('/uploads/<%= recipe.recipeImage %>');"></div>
+                
+                <form class="form-inline my-2 my-lg-0 ml-auto justify-content-end" action="/searchRecipes" method="GET">
+                  <input name="query" class="form-control mr-sm-2 rounded-pill" type="search" placeholder="Search"
+                    aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i>
+                    Search</button>
+                </form>
 
-                      <div class="text d-flex align-items-center">
-                        <div>
-                          <div class="d-flex">
-                            <div>
-                              <h3><strong><%= recipe.recipeName %></strong></h3>
-                            </div>
-                          </div>
-                          <div>
-                            <p>
-                              <strong><%= recipe.cuisine %></strong> | <%= recipe.difficulty %>
-                            </p>
-                          </div>
 
-                          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
-                            View More
-                          </a>
-
-                        </div>
-                      </div>
+                <div class="row no-gutters d-flex align-items-stretch mt-3">
+                  <% if (recipes.length===0) { %>
+                    <div class="col-md-12 text-center">
+                      <p><strong>You haven't added any recipes yet.</strong></p>
                     </div>
-                  </div>
-                  <% }); %>
-                  <% } %>
-                  <!-- Modal -->
-                  <!-- Modal -->
-                  <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 style="font-weight: bold;">Recipe Details</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="card shadow p-3 mb-5 bg-white rounded" style="border-radius: 10px !important;">
-                            <div class="row" style="margin-bottom: -40px;">
-                              <!-- Circular image on the left -->
-                              <div class="col-md-4 text-center">
-                                <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
-                                  <img id="recipeImage" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
+                    <% } else { %>
+                      <% recipes.forEach(recipe=> { %>
+                        <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+                          <div class="menus d-sm-flex ftco-animate align-items-stretch">
+                            <div class="menu-img img"
+                              style="background-image: url('/uploads/<%= recipe.recipeImage %>');"></div>
+
+                            <div class="text d-flex align-items-center">
+                              <div>
+                                <div class="d-flex">
+                                  <div>
+                                    <h3><strong>
+                                        <%= recipe.recipeName %>
+                                      </strong></h3>
+                                  </div>
                                 </div>
-                              </div>
-                              <!-- Recipe details on the right -->
-                              <div class="col-md-8">
-                                <div class="recipe-details">
-                                  <h2 id="recipeName" class="mb-3"></h2>
-                                  <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
-                                  <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
+                                <div>
                                   <p>
-                                    <i class="fa fa-cutlery"></i> <span id="servings"></span> <i class="fa fa-clock-o"></i> <span id="cookTime"></span>
+                                    <strong>
+                                      <%= recipe.cuisine %>
+                                    </strong> | <%= recipe.difficulty %>
                                   </p>
                                 </div>
+
+                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal"
+                                  data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>"
+                                  data-difficulty="<%= recipe.difficulty %>"
+                                  data-recipe-image="/uploads/<%= recipe.recipeImage %>"
+                                  data-ingredients="<%= recipe.ingredients %>"
+                                  data-instructions="<%= recipe.instructions %>">
+                                  View More
+                                </a>
+
                               </div>
                             </div>
                           </div>
-                          <!-- Ingredients and instructions below -->
-                          <div class="row mt-4">
-                            <div class="col-md-12">
-                              <h3>Ingredients</h3>
-                              <ul id="ingredients" class="list-unstyled"></ul>
-                            </div>
-                          </div>
-                          <div class="row mt-4">
-                            <div class="col-md-12">
-                              <h3>Instructions</h3>
-                              <ol id="instructions" class="list-unstyled"></ol>
-                            </div>
-                          </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        <% }); %>
+                          <% } %>
+                            <!-- Modal -->
+                            <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog"
+                              aria-labelledby="recipeModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 style="font-weight: bold;">Recipe Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="card shadow p-3 mb-5 bg-white rounded"
+                                      style="border-radius: 10px !important;">
+                                      <div class="row" style="margin-bottom: -40px;">
+                                        <!-- Circular image on the left -->
+                                        <div class="col-md-4 text-center">
+                                          <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
+                                            <img id="recipeImage" class="menu-img img-fluid"
+                                              style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
+                                          </div>
+                                        </div>
+                                        <!-- Recipe details on the right -->
+                                        <div class="col-md-8">
+                                          <div class="recipe-details">
+                                            <h2 id="recipeName" class="mb-3"></h2>
+                                            <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
+                                            <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
+                                            <p>
+                                              <i class="fa fa-cutlery"></i> <span id="servings"></span> <i
+                                                class="fa fa-clock-o"></i> <span id="cookTime"></span>
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- Ingredients and instructions below -->
+                                    <div class="row mt-4">
+                                      <div class="col-md-12">
+                                        <h3>Ingredients</h3>
+                                        <ul id="ingredients" class="list-unstyled"></ul>
+                                      </div>
+                                    </div>
+                                    <div class="row mt-4">
+                                      <div class="col-md-12">
+                                        <h3>Instructions</h3>
+                                        <ol id="instructions" class="list-unstyled"></ol>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
 
                 </div>
@@ -176,9 +205,12 @@
         <div class="col-md-12 text-center">
 
           <p>
-            Copyright &copy;<script>
+            Copyright &copy;
+            <script>
               document.write(new Date().getFullYear());
-            </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="" target="_blank">4D</a></p>
+            </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by
+            <a href="" target="_blank">4D</a>
+          </p>
         </div>
       </div>
     </div>
@@ -188,7 +220,8 @@
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
     </svg></div>
 
 
@@ -207,7 +240,7 @@
   <script src="js/main.js"></script>
 
   <script>
-    $('#recipeModal').on('show.bs.modal', function(event) {
+    $('#recipeModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var recipeName = button.data('recipe-name');
       var cuisine = button.data('cuisine');
@@ -215,10 +248,9 @@
       var cookTime = button.data('cookTime');
       var servings = button.data('servings');
       var recipeImage = button.data('recipe-image');
-      var ingredientsString = button.data('ingredients'); // Get the ingredients as a comma-separated string
-      var instructionsString = button.data('instructions'); // Get the instructions as a comma-separated string
+      var ingredientsString = button.data('ingredients'); 
+      var instructionsString = button.data('instructions'); 
 
-      // Convert the comma-separated strings to arrays
       var ingredients = ingredientsString ? ingredientsString.split(',').map(ingredient => ingredient.trim()) : [];
       var instructions = instructionsString ? instructionsString.split('.,').map(instruction => instruction.trim()) : [];
 
@@ -227,21 +259,19 @@
       modal.find('#recipeName').text(recipeName);
       modal.find('#cuisine').text(cuisine);
       modal.find('#difficulty').text(difficulty);
-      modal.find('#servings').text(servings); // Corrected
-      modal.find('#cookTime').text(cookTime); // Corrected
+      modal.find('#servings').text(servings); 
+      modal.find('#cookTime').text(cookTime); 
       modal.find('#recipeImage').attr('src', recipeImage);
 
-      // Display ingredients as a numbered list
       var ingredientsHtml = '<ol>';
-      ingredients.forEach(function(ingredient, index) {
+      ingredients.forEach(function (ingredient, index) {
         ingredientsHtml += '<li>' + ingredient + '</li>';
       });
       ingredientsHtml += '</ol>';
       modal.find('#ingredients').html(ingredientsHtml);
 
-      // Display instructions as a numbered list
       var instructionsHtml = '<ol>';
-      instructions.forEach(function(instruction, index) {
+      instructions.forEach(function (instruction, index) {
         instructionsHtml += '<li>' + instruction + '</li>';
       });
       instructionsHtml += '</ol>';

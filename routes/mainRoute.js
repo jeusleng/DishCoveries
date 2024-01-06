@@ -52,4 +52,6 @@ router.get('/myBrowser',islogin, controller.browseRecipes);
 router.post('/recipes/approve/:id', controller.approveRecipe);
 router.post('/recipes/reject/:id', controller.rejectRecipe);
 
+router.get('/searchRecipes', controller.searchRecipes);
+
 module.exports = router;

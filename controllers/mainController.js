@@ -242,6 +242,8 @@ exports.getMyRecipes = (req, res) => {
   });
 };
 exports.browseRecipes = (req, res) => {
+  const user = req.session.user;
+
   const query = `
     SELECT recipes.*, users.firstName AS contributorName, users.lastName
     FROM recipes 
@@ -257,7 +259,7 @@ exports.browseRecipes = (req, res) => {
 
     const recipes = results;
 
-    res.render('myBrowser', { recipes });
+    res.render('myBrowser', { user, recipes });
   });
 };
 exports.updateStatus = (req, res) => {
@@ -287,6 +289,7 @@ exports.getMyProfile = (req, res) => {
   }
 
   // Query to retrieve user details
+  const successMessage = req.flash('success');
   const query = 'SELECT * FROM users WHERE id = ?';
 
   pool.query(query, [user.id], (error, results) => {
@@ -297,7 +300,7 @@ exports.getMyProfile = (req, res) => {
 
     const userProfile = results[0]; // Assuming there is only one user with the given ID
 
-    res.render('myProfile', { user: userProfile });
+    res.render('myProfile', { user: userProfile, successMessage });
   });
 };
 exports.updateProfile = (req, res) => {
@@ -327,7 +330,8 @@ exports.updateProfile = (req, res) => {
     }
 
   
-    res.json({ user: updatedProfile });
+    req.flash('success', 'Profile updated successfully');
+    res.redirect('/myProfile');
   });
 };
 exports.approveRecipe = async (req, res) => {
@@ -374,17 +378,32 @@ exports.rejectRecipe = async (req, res) => {
 };
 
 
-// exports.updateProfile = (req, res)=>{
-//   let firstName = req.body.firstName
-//   let lastName = req.body.lastName
-//   let gender = req.body.gender
-//   let email = req.body.email
-//   let  address = req.body.address
-//   let  specialty = req.body.specialty
+exports.searchRecipes = (req, res) => {
+  const searchQuery = req.query.query;
 
-//   sql = "UPDATE `users` SET `firstName`='?',`lastName`='?',`gender`='?',`address`='?',`specialty`='?' WHERE id = ?"
-//   pool.query(sql, [firstName, lastName, gender, email, address, specialty, id], (err,result)=>{
+  if (!searchQuery) {
+    return res.redirect('/myRecipes'); 
+  }
 
-//   })
-// }
+  const query = `
+    SELECT recipes.*, users.firstName AS contributorName, users.lastName
+    FROM recipes 
+    JOIN users ON recipes.userID = users.id
+    WHERE recipes.status = 'approved'
+      AND (recipes.recipeName LIKE ? OR recipes.cuisine LIKE ? OR recipes.category LIKE ?)
+  `;
+
+  const searchParam = `%${searchQuery}%`;
+
+  pool.query(query, [searchParam, searchParam, searchParam], (error, results) => {
+    if (error) {
+      console.error('Database query error:', error);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    const recipes = results;
+
+    res.render('myRecipes', { recipes, searchQuery });
+  });
+};
 
