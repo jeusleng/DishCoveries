@@ -8848,6 +8848,25 @@ h1, h2, h3, h4, h5,
   font-weight: 900;
   margin-bottom: 1em; }
 
+  .recipe-card {
+    box-shadow: 0.5px 0.5px 20px rgba(0, 0, 0, 0.1); /* Adjust the values to your liking */
+    transition: box-shadow 0.3s ease-in-out; /* Optional: Add a smooth transition effect */
+    border-radius: 20px; /* Set the border-radius to 20px */
+    margin: 15px; /* Add margin to create spacing between cards */
+  }
+
+  /* Center all elements inside the card */
+  .recipe-card .menus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Optional: Hover effect to increase the shadow on hover */
+  .recipe-card:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Adjust the values to your liking */
+  }
+
 .menus {
   text-align: center;
   width: 100%;

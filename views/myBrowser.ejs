@@ -77,32 +77,33 @@
                   <% } else { %>
                     <!-- Use a forEach loop to dynamically generate recipe content -->
                     <% recipes.forEach(recipe => { %>
-                        <div class="col-md-12 col-lg-3 d-flex align-self-stretch">
-                          <div class="menus d-sm-flex ftco-animate align-items-stretch">
-                            <!-- Place the menu-img div inside the text div for better alignment -->
-                            <div class=" d-flex align-items-center flex-column">
-                              <!-- Use the img tag to display the image -->
-                              <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px;">
-                              <div class="mt-2">
-                                <h5><strong><%= recipe.recipeName %></strong></h5>
-                                <p><%= recipe.contributorName %> <%= recipe.lastName %></p>
-                                  <p><strong> <%= recipe.cuisine %> </strong> | <%= recipe.difficulty %> </p> 
-                                 
-                                <p>
+                      <div class="col-md-12 col-lg-3 d-flex align-self-stretch recipe-card">
+                        <div class="menus d-sm-flex ftco-animate align-items-stretch">
+                          <!-- Place the menu-img div inside the text div for better alignment -->
+                          <div class="d-flex align-items-center flex-column">
+                            <br>
+                            <!-- Use the img tag to display the image -->
+                            <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px;">
+                            <div class="mt-2">
+                              <h5><strong><%= recipe.recipeName %></strong></h5>
+                              <p><%= recipe.contributorName %> <%= recipe.lastName %></p>
+                              <p><strong> <%= recipe.cuisine %> </strong> | <%= recipe.difficulty %> </p> 
+                              <p>
                                 <i class="fa fa-cutlery"></i>  <%= recipe.prepTime %>  <i class="fa fa-clock-o"></i>  <%= recipe.cookTime %>
-                            </p>
-                              </div>
-                              
-                              <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal"
-                                data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>"
-                                data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>"
-                                data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
-                                View More
-                              </a>
+                              </p>
                             </div>
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal"
+                              data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>"
+                              data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>"
+                              data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
+                              View More
+                            </a>
+                            <br>
                           </div>
                         </div>
-                      <% }); %>
+                      </div>
+                    <% }); %>
+                    
                       
                    
                   <% } %>
