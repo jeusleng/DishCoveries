@@ -133,11 +133,54 @@ exports.adminHomepage = (req, res) => {
   const user = req.session.user;
 
   if (user && user.userType === 'admin') {
-    res.render('adminHomepage', { user });
+    // Fetch recipe status counts
+    pool.query('SELECT COUNT(*) AS pendingCount FROM recipes WHERE status = "pending"', (err, pendingResult) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      pool.query('SELECT COUNT(*) AS approvedCount FROM recipes WHERE status = "approved"', (err, approvedResult) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send('Internal Server Error');
+        }
+
+        // Fetch user type counts
+        pool.query('SELECT COUNT(*) AS contributorCount FROM users WHERE userType = "contributor"', (err, contributorResult) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+          }
+
+          pool.query('SELECT COUNT(*) AS viewerCount FROM users WHERE userType = "viewer"', (err, viewerResult) => {
+            if (err) {
+              console.error(err);
+              return res.status(500).send('Internal Server Error');
+            }
+
+            const pendingCount = pendingResult[0].pendingCount;
+            const approvedCount = approvedResult[0].approvedCount;
+            const contributorCount = contributorResult[0].contributorCount;
+            const viewerCount = viewerResult[0].viewerCount;
+
+            // Render the view with variables
+            res.render('adminHomepage', {
+              user,
+              pendingCount,
+              approvedCount,
+              contributorCount,
+              viewerCount
+            });
+          });
+        });
+      });
+    });
   } else {
     res.redirect('/');
   }
 };
+
 
 exports.getAddRecipe = (req, res) => {
   const user = req.session.user;
@@ -178,7 +221,6 @@ exports.createRecipe = (req, res) => {
     res.redirect('/');
   }
 };
-
 
 
 
@@ -360,14 +402,17 @@ exports.approveRecipe = async (req, res) => {
 exports.rejectRecipe = async (req, res) => {
   try {
     const recipeId = req.params.id;
-    const updateQuery = 'UPDATE recipes SET status = ? WHERE id = ?';
+    const rejectReason = req.body.rejectReason; // Get the reject reason from the request body
+    console.log('Reject Reason:', rejectReason);
+    const updateQuery = 'UPDATE recipes SET status = ?, rejectReason = ? WHERE id = ?';
 
-    // Set the status to 'rejected'
-    pool.query(updateQuery, ['rejected', recipeId], (error, results) => {
+    // Set the status to 'rejected' and include the reject reason
+    pool.query(updateQuery, ['rejected', rejectReason, recipeId], (error, results) => {
       if (error) {
         console.error(error);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
+
 
       req.flash('success', 'Recipe has been Rejected!');
       res.redirect('/recipeRequests');
@@ -377,7 +422,6 @@ exports.rejectRecipe = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 exports.searchRecipes = (req, res) => {
   const searchQuery = req.query.query;

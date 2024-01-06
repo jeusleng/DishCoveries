@@ -63,6 +63,8 @@
           </div>
           <div class="modal-body">
             <p><strong>Recipe Name:</strong> <span id="recipeName"></span></p>
+            <p><strong>Status:</strong> <span id="status"></span></p>
+            <p id="rejectReasonContainer" style="display: none;"><strong>Reject Reason:</strong> <span id="rejectReason"></span></p>
             <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
             <p><strong>Category:</strong> <span id="category"></span></p>
             <p><strong>Description:</strong> <span id="description"></span></p>
@@ -113,7 +115,6 @@
             <tbody>
               <% let counter=1; %>
               <% recipes.forEach(recipe=> {%>
-              <% if (recipe.status !== 'pending' && recipe.status !== 'rejected') { %>
               <tr>
                 <td>
                   <%= counter %>
@@ -134,10 +135,12 @@
                 </td>
 
                 <td>
-                  <span class="badge badge-<%= recipe.status === 'approved' ? 'success' : 'warning' %> rounded-pill d-inline">
-                    <%= recipe.status %>
+                  <span class="badge badge-<%= recipe.status === 'approved' ? 'success' : (recipe.status === 'pending' ? 'warning' : 'danger') %> rounded-pill d-inline">
+                    <%= recipe.status.charAt(0).toUpperCase() + recipe.status.slice(1) %>
                   </span>
                 </td>
+                
+
                 <!-- <td><%= recipe.prepTime %></td>
                         <td><%= recipe.cookTime %></td>
                         <td><%= recipe.servings %></td>
@@ -151,9 +154,11 @@
                     <ul class="dropdown-menu">
                       <li>
                         <!-- ... Existing code ... -->
-                        <button type="button" class="dropdown-item view-recipe-btn" data-bs-toggle="modal" data-bs-target="#viewModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-category="<%= recipe.category %>" data-description="<%= recipe.recipeDescription %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>" data-image="/uploads/<%= recipe.recipeImage %>">
+                        <button type="button" class="dropdown-item view-recipe-btn" data-bs-toggle="modal" data-bs-target="#viewModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-category="<%= recipe.category %>" data-description="<%= recipe.recipeDescription %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>" data-image="/uploads/<%= recipe.recipeImage %>" data-status="<%= recipe.status %>" data-reject-reason="<%= recipe.rejectReason || '' %>">
+                          <!-- Use an empty string if rejectReason is undefined -->
                           View
                         </button>
+
                         <!-- ... Existing code ... -->
 
                       </li>
@@ -164,15 +169,15 @@
                         </form>
                       </li>
                       <li>
-                        <form action="/recipes/reject/<%= recipe.id %>" method="post">
-                          <button type="submit" class="dropdown-item">Reject</button>
+                        <form id="rejectForm" action="/recipes/reject/<%= recipe.id %>" method="post" enctype="multipart/form-data">
+                          <button type="submit" class="dropdown-item reject-btn">Reject</button>
                         </form>
+                        
                       </li>
                     </ul>
                   </div>
               </tr>
               <% counter++; %>
-              <% } %>
               <% }); %>
             </tbody>
           </table>
@@ -181,6 +186,68 @@
     </section>
     <script type="text/javascript">
       $(document).ready(function() {
+        $('.dropdown-item.reject-btn').click(function (event) {
+  event.preventDefault();
+
+
+  // Create a Bootstrap modal
+  var modal = `
+    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="rejectModalLabel">Enter Reject Reason</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <label for="rejectReasonInput" class="form-label">Reject Reason:</label>
+            <input type="text" class="form-control" id="rejectReasonInput">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="submitRejectReason">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Append the modal to the body
+  $('body').append(modal);
+
+  // Show the modal
+  $('#rejectModal').modal('show');
+
+  // Handle submit button click
+  $('#submitRejectReason').click(function () {
+    // Get the reject reason from the input field
+    var rejectReason = $('#rejectReasonInput').val();
+
+    // If the reject reason is not empty, proceed with the form submission
+    if (rejectReason.trim() !== '') {
+      // Disable the button to prevent multiple submissions
+      $(this).prop('disabled', true);
+
+      // Append the reject reason as a hidden input
+      var form = $(event.target).closest('form');
+      $('<input>').attr({
+        type: 'hidden',
+        name: 'rejectReason',
+        value: rejectReason
+      }).appendTo(form);
+
+      // Submit the form
+      form.submit();
+
+      // Close the modal
+      $('#rejectModal').modal('hide');
+    } else {
+      alert('Please enter a reject reason.'); // You can customize this alert
+    }
+  });
+});
+
+
         $('#myTable').DataTable();
 
         // Handle click event on "View" button
@@ -192,6 +259,8 @@
           var ingredients = $(this).data('ingredients');
           var instructions = $(this).data('instructions');
           var image = $(this).data('image');
+          var status = $(this).data('status');
+          var rejectReason = $(this).data('reject-reason');
 
           // Update modal content
           $('#recipeName').text(recipeName);
@@ -201,9 +270,19 @@
           $('#ingredients').text(ingredients);
           $('#instructions').text(instructions);
           $('#recipeImage').attr('src', image);
+          $('#status').text(status);
+
+          // Display reject reason if status is 'rejected'
+          if (status === 'rejected') {
+            $('#rejectReasonContainer').show();
+            $('#rejectReason').text(rejectReason);
+          } else {
+            $('#rejectReasonContainer').hide();
+          }
         });
       });
     </script>
+
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script type="text/javascript">

@@ -1,208 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Admin Page</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-    <!-- DataTables CSS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Page</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <!-- DataTables CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
 
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <%- include("./section/sidebar.ejs") %>
+  <%- include("./section/sidebar.ejs") %>
 
-    
 
-    <main id="main" class="main">
 
-        <div class="pagetitle">
-            <h1>Users Management</h1>
-            <!-- <nav>
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Users Management</h1>
+      <!-- <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item ">Dashboard</li>
                 </ol>
             </nav> -->
-        </div><!-- End Page Title -->
+    </div><!-- End Page Title -->
 
-        <section>
+    <section>
 
-            <% if (successMessages && successMessages.length > 0) { %>
-                <div class="alert alert-success" role="alert">
-                    <%= successMessages[0] %>
-                </div>
-            <% } %>
-            <div class="card p-5 mt-3">
-                <div class="card-body">
-                    <table id="myTable" class="display">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Gender</th>
-                                <!-- <th>BirthDate</th>
+      <% if (successMessages && successMessages.length > 0) { %>
+      <div class="alert alert-success" role="alert">
+        <%= successMessages[0] %>
+      </div>
+      <% } %>
+      <div class="card p-5 mt-3">
+        <div class="card-body">
+          <table id="myTable" class="display">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <!-- <th>BirthDate</th>
                                 <th>Address</th> -->
-                                <th>User Type</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                <th>User Type</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% let counter = 1; %>
-                            <% users.forEach(user=> {%>
-                                <!-- Add your data rows here -->
-                                <tr>
-                                    <td>
-                                        <%= counter %>
-                                    </td>
-                                    <td>
-                                        <%= user.firstName %>
-                                    </td>   
-                                    <td>
-                                        <%= user.lastName %>
-                                    </td>
-                                    <td>
-                                        <%= user.gender %>
-                                    </td>
-                                    <td>
-                                        <%= user.userType %>
-                                    </td>
-                                    <td>
-                                        <%= user.email %>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-<%= user.status === 'Active' ? 'success' : 'danger' %> rounded-pill d-inline">
-                                          <%= user.status %>
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Update
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <form action="/updateUserStatus" method="post">
-                                                        <input type="hidden" name="id" value="<%= user.id %>">
-                                                        <input type="hidden" name="status" value="Active">
-                                                        <button type="submit" class="dropdown-item">Active</button>
-                                                    </form>
-                                                </li>
-                                                <li>
-                                                    <form action="/updateUserStatus" method="post">
-                                                        <input type="hidden" name="id" value="<%= user.id %>">
-                                                        <input type="hidden" name="status" value="Inactive">
-                                                        <button type="submit" class="dropdown-item">Inactive</button>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    
-                                    <!-- Add your data columns here -->
-                                </tr>
-                                <% counter++; %>
-                                <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-        </section>
-  
-        <script>
-            $(document).ready(function () {
-                // Handle click event on dropdown items with class 'update-status'
-                $('.update-status').click(function (e) {
-                    e.preventDefault(); // Prevent default link behavior
-                    // Get user ID and status from data attributes
-                    const userId = $(this).data('id');
-                    const status = $(this).data('status');
-                    // Send AJAX request to update status
-                    $.ajax({
-                        url: '/update-status', // Update the URL to match your server route
-                        method: 'POST',
-                        data: { id: userId, status: status },
-                        success: function (response) {
-                            // Handle success, if needed
-                            console.log(response);
-                            // Update the UI (optional)
-                            const badge = $(e.target).closest('tr').find('.badge');
-                            badge.removeClass('badge-danger badge-success');
-                            badge.addClass(status === 'Active' ? 'badge-success' : 'badge-danger');
-                            badge.text(status);
-                        },
-                        error: function (error) {
-                            // Handle error, if needed
-                            console.error(error);
-                        }
-                    });
-                });
-            });
-        </script>
-        
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#myTable').DataTable();
-            });
-        </script>
-    </main><!-- End #main -->
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
-        <div class="copyright">
-            &copy; Copyright <strong><span>DishCoveries</span></strong>. All Rights Reserved
+              </tr>
+            </thead>
+            <tbody>
+              <% let counter = 1; %>
+              <% users.forEach(user=> {%>
+              <!-- Add your data rows here -->
+              <tr>
+                <td>
+                  <%= counter %>
+                </td>
+                <td>
+                  <%= user.firstName %>
+                </td>
+                <td>
+                  <%= user.lastName %>
+                </td>
+                <td>
+                  <%= user.gender %>
+                </td>
+                <td>
+                  <%= user.userType %>
+                </td>
+                <td>
+                  <%= user.email %>
+                </td>
+                <td>
+                  <span class="badge badge-<%= user.status === 'Active' ? 'success' : 'danger' %> rounded-pill d-inline">
+                    <%= user.status %>
+                  </span>
+                </td>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Update
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <form action="/updateUserStatus" method="post">
+                          <input type="hidden" name="id" value="<%= user.id %>">
+                          <input type="hidden" name="status" value="Active">
+                          <button type="submit" class="dropdown-item">Active</button>
+                        </form>
+                      </li>
+                      <li>
+                        <form action="/updateUserStatus" method="post">
+                          <input type="hidden" name="id" value="<%= user.id %>">
+                          <input type="hidden" name="status" value="Inactive">
+                          <button type="submit" class="dropdown-item">Inactive</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+
+                <!-- Add your data columns here -->
+              </tr>
+              <% counter++; %>
+              <% }); %>
+            </tbody>
+          </table>
         </div>
-        <div class="credits">
-            <div class="credits">Designed by <a href="">Pabebe Ghurls</a>
-        </div>
-    </footer><!-- End Footer -->
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/chart.js/chart.umd.js"></script>
-    <script src="assets/vendor/echarts/echarts.min.js"></script>
-    <script src="assets/vendor/quill/quill.min.js"></script>
-    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-<!-- MDB -->
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"
-></script>
+      </div>
+
+    </section>
+
+    <script>
+      $(document).ready(function() {
+        // Handle click event on dropdown items with class 'update-status'
+        $('.update-status').click(function(e) {
+          e.preventDefault(); // Prevent default link behavior
+          // Get user ID and status from data attributes
+          const userId = $(this).data('id');
+          const status = $(this).data('status');
+          // Send AJAX request to update status
+          $.ajax({
+            url: '/update-status', // Update the URL to match your server route
+            method: 'POST',
+            data: {
+              id: userId,
+              status: status
+            },
+            success: function(response) {
+              // Handle success, if needed
+              console.log(response);
+              // Update the UI (optional)
+              const badge = $(e.target).closest('tr').find('.badge');
+              badge.removeClass('badge-danger badge-success');
+              badge.addClass(status === 'Active' ? 'badge-success' : 'badge-danger');
+              badge.text(status);
+            },
+            error: function(error) {
+              // Handle error, if needed
+              console.error(error);
+            }
+          });
+        });
+      });
+    </script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#myTable').DataTable();
+      });
+    </script>
+  </main><!-- End #main -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>DishCoveries</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <div class="credits">Designed by <a href="">Pabebe Ghurls</a>
+      </div>
+  </footer><!-- End Footer -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
 </body>
+
 </html>

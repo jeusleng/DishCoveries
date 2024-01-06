@@ -15,7 +15,7 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> <!-- Use Poppins font here -->
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +31,26 @@
 
   <!-- MDB -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
+
+  <style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a,
+    ol,
+    ul,
+    li,
+    blockquote,
+    pre,
+    code {
+      font-family: 'Poppins', sans-serif !important;
+    }
+  </style>
 
 </head>
 
@@ -54,100 +74,87 @@
     <section class="section dashboard">
       <div class="row">
 
-        <!-- Left side columns -->
-        <div class="col-lg-8">
+        <!-- Pending Recipes -->
+        <div class="col-lg-6">
           <div class="row">
 
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+            <!-- Pending Recipes Card -->
+            <div class="col-md-6">
               <div class="card info-card sales-card">
-
                 <div class="card-body">
                   <h5 class="card-title">Pending Recipes</h5>
-
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
+                      <i class="bi bi-clock"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>#</h6>
+                      <h6><%= pendingCount %></h6> <!-- Replace with actual data -->
                     </div>
                   </div>
                 </div>
-
               </div>
-            </div><!-- End Sales Card -->
+            </div><!-- End Pending Recipes Card -->
 
-            <!--  Card -->
-            <div class="col-xxl-4 col-md-6">
+            <!-- Approved Recipes Card -->
+            <div class="col-md-6">
               <div class="card info-card revenue-card">
-
                 <div class="card-body">
                   <h5 class="card-title">Approved Recipes</h5>
-
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
+                      <i class="bi bi-hand-thumbs-up"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>#</h6>
+                      <h6><%= approvedCount %></h6> <!-- Replace with actual data -->
                     </div>
                   </div>
                 </div>
-
               </div>
-            </div><!-- End Revenue Card -->
+            </div><!-- End Approved Recipes Card -->
 
-            <!-- Users Card -->
-            <div class="col-xxl-4 col-xl-12">
+          </div>
+        </div><!-- End Pending and Approved Recipes -->
 
+        <!-- Contributors and Viewers -->
+        <div class="col-lg-6">
+          <div class="row">
+
+            <!-- Contributors Card -->
+            <div class="col-md-6">
               <div class="card info-card users-card">
-
                 <div class="card-body">
                   <h5 class="card-title">Contributors</h5>
-
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-people"></i>
+                      <i class="bi bi-person-check"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>#</h6>
+                      <h6><%= contributorCount %></h6> <!-- Replace with actual data -->
                     </div>
                   </div>
-
                 </div>
               </div>
+            </div><!-- End Contributors Card -->
 
-            </div><!-- End Customers Card -->
-
-            <!-- Users Card -->
-            <div class="col-xxl-4 col-xl-12">
-
+            <!-- Viewers Card -->
+            <div class="col-md-6">
               <div class="card info-card users-card">
-
                 <div class="card-body">
                   <h5 class="card-title">Viewers</h5>
-
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>#</h6>
+                      <h6><%= viewerCount %></h6> <!-- Replace with actual data -->
                     </div>
                   </div>
-
                 </div>
               </div>
+            </div><!-- End Viewers Card -->
 
-            </div><!-- End Customers Card -->
           </div>
-        </div><!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-
-        </div><!-- End Right side columns -->
+        </div><!-- End Contributors and Viewers -->
 
       </div>
     </section>

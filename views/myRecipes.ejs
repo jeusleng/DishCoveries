@@ -245,6 +245,7 @@
       var recipeName = button.data('recipe-name');
       var cuisine = button.data('cuisine');
       var difficulty = button.data('difficulty');
+      var status = button.data('status');
       var cookTime = button.data('cookTime');
       var servings = button.data('servings');
       var recipeImage = button.data('recipe-image');
@@ -253,7 +254,7 @@
 
       var ingredients = ingredientsString ? ingredientsString.split(',').map(ingredient => ingredient.trim()) : [];
       var instructions = instructionsString ? instructionsString.split('.,').map(instruction => instruction.trim()) : [];
-
+  
       var modal = $(this);
       modal.find('.modal-title').text(recipeName);
       modal.find('#recipeName').text(recipeName);
@@ -267,7 +268,7 @@
       ingredients.forEach(function (ingredient, index) {
         ingredientsHtml += '<li>' + ingredient + '</li>';
       });
-      ingredientsHtml += '</ol>';
+      ingredientsHtml += '</ul>';
       modal.find('#ingredients').html(ingredientsHtml);
 
       var instructionsHtml = '<ol>';
