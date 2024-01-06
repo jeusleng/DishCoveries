@@ -105,14 +105,15 @@ exports.loginUser = async (req, res) => {
 
 exports.viewerHomepage = (req, res) => {
   const userType = req.session.user ? req.session.user.userType : null;
+  const user = req.session.user;
 
-
-  if (userType === 'viewer') {
-    res.render('viewerHomepage');
+  if (user && user.userType === 'viewer') {
+    res.render('viewerHomepage', { user });
   } else {
     res.redirect('/');
   }
 };
+
 
 exports.contributorHomepage = (req, res) => {
   const userType = req.session.user ? req.session.user.userType : null;
@@ -158,7 +159,7 @@ exports.createRecipe = (req, res) => {
 
     const recipeImage = req.file ? req.file.filename : null;
 
-    const query = 'INSERT INTO recipes (recipeName, cuisine, recipeDescription, ingredients, instructions, prepTime, cookTime, servings, difficulty, category, recipeImage, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO recipes (recipeName, cuisine, recipeDescription, ingredients, instructions, prepTime, cookTime, servings, difficulty, category, recipeImage, status, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "pending", ?)';
 
     pool.query(
       query,
@@ -195,7 +196,7 @@ exports.getRecipeRequests = (req, res) => {
     const recipes = results;
 
 
-    res.render('recipeRequests', { user, recipes });
+    res.render('recipeRequests', { user, recipes, successMessages: req.flash('success') });
   });
 };
 
@@ -211,7 +212,7 @@ exports.userManagement = (req, res) => {
       return res.status(500).send('Internal Server Error');
     }
 
-    const users = results;
+    const users = results.filter(user => user.userType !== 'admin');
 
 
     res.render('userManagement', { user, users, successMessages: req.flash('success') });
@@ -245,6 +246,7 @@ exports.browseRecipes = (req, res) => {
     SELECT recipes.*, users.firstName AS contributorName, users.lastName
     FROM recipes 
     JOIN users ON recipes.userID = users.id
+    WHERE recipes.status = 'approved'
   `;
 
   pool.query(query, [], (error, results) => {
@@ -328,6 +330,49 @@ exports.updateProfile = (req, res) => {
     res.json({ user: updatedProfile });
   });
 };
+exports.approveRecipe = async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    const updateQuery = 'UPDATE recipes SET status = ? WHERE id = ?';
+
+    // Set the status to 'approved'
+    pool.query(updateQuery, ['approved', recipeId], (error, results) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      // res.status(200).json({ message: 'Recipe approved successfully' });
+      req.flash('success', 'Recipe has been Approved!');
+      res.redirect('/recipeRequests');
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+exports.rejectRecipe = async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    const updateQuery = 'UPDATE recipes SET status = ? WHERE id = ?';
+
+    // Set the status to 'rejected'
+    pool.query(updateQuery, ['rejected', recipeId], (error, results) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      req.flash('success', 'Recipe has been Rejected!');
+      res.redirect('/recipeRequests');
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 // exports.updateProfile = (req, res)=>{
 //   let firstName = req.body.firstName

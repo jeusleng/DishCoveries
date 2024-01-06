@@ -49,4 +49,7 @@ router.post('/updateProfile',islogin, controller.updateProfile);
 router.post('/updateUserStatus', islogin, controller.updateStatus);
 router.get('/myBrowser',islogin, controller.browseRecipes);
 
+router.post('/recipes/approve/:id', controller.approveRecipe);
+router.post('/recipes/reject/:id', controller.rejectRecipe);
+
 module.exports = router;
