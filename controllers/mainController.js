@@ -22,7 +22,7 @@ exports.registerUser = async (req, res) => {
 
     // Updated query to include the 'status' column with a default value of 'Active'
     const query = 'INSERT INTO users (firstName, lastName, gender, bdate, address, userType, password, email, specialty, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, "Active")';
-    
+
     pool.query(query, [firstName, lastName, gender, bdate, address, userType, hashedPassword, email, specialty], (error, results) => {
       if (error) {
         console.error(error);
@@ -372,7 +372,7 @@ exports.updateProfile = (req, res) => {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
 
-  
+
     req.flash('success', 'Profile updated successfully');
     res.redirect('/myProfile');
   });
@@ -423,11 +423,12 @@ exports.rejectRecipe = async (req, res) => {
   }
 };
 
+
 exports.searchRecipes = (req, res) => {
   const searchQuery = req.query.query;
 
   if (!searchQuery) {
-    return res.redirect('/myRecipes'); 
+    return res.redirect('/myRecipes');
   }
 
   const query = `
@@ -452,3 +453,27 @@ exports.searchRecipes = (req, res) => {
   });
 };
 
+exports.getMyBookmarks = (req, res) => {
+  const user = req.session.user;
+
+  // Query to retrieve bookmarked recipes for the current user
+  const query = `
+    SELECT recipes.*, users.firstName, users.lastName
+    FROM recipes
+    JOIN users ON recipes.userID = users.id
+    JOIN bookmarks ON recipes.id = bookmarks.recipeID
+    WHERE bookmarks.userID = ?
+  `;
+
+  pool.query(query, [user.id], (error, results) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    const recipes = results;
+
+    // Render the page for viewing bookmarked recipes
+    res.render('bookmarkedRecipes', { user, recipes });
+  });
+};

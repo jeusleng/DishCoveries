@@ -36,8 +36,8 @@
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a href="<%= user && user.userType === 'contributor' ? '/contributorHomepage' : '/viewerHomepage' %>" class="nav-link">Home</a></li>
-          <li class="nav-item active"><a href="" class="nav-link">Browse Recipes</a></li>
-          <li class="nav-item"><a href="/bookmarkedRecipes" class="nav-link">Bookmarked Recipes</a></li>
+          <li class="nav-item"><a href="/myBrowser" class="nav-link">Browse Recipes</a></li>
+          <li class="nav-item active"><a href="/bookmarkedRecipes" class="nav-link">Bookmarked Recipes</a></li>
           <% if (user && user.userType == 'contributor') { %>
           <li class="nav-item "><a href="/myRecipes" class="nav-link">My Recipes</a></li>
           <% } %>
@@ -58,9 +58,9 @@
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate text-center mb-4">
-          <h1 class="mb-2 bread">Browse Recipes</h1>
-          <p class="breadcrumbs"><span class="mr-2">a culinary haven where you can explore a diverse array of delectable recipes contributed by our talented community of users. Whether you're a seasoned chef seeking inspiration or a food enthusiast eager to discover new flavors, this page is your gateway to a world of gastronomic delights.
-
+          <h1 class="mb-2 bread">Bookmarked Recipes</h1>
+          <p class="breadcrumbs"><span class="mr-2">
+              These recipes you see here have been marked as your favorites or selections for future reference. Bookmarking serves as a way for you to easily access and revisit these specific recipes at any given time.
             </span>
           </p>
         </div>
@@ -104,7 +104,7 @@
                         <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
                         <div class="mt-2">
                           <h5 class="recipe-name"><strong><%= recipe.recipeName %></strong></h5>
-                          <p class="contributor-name"><%= recipe.contributorName %> <%= recipe.lastName %></p>
+                          <p class="contributor-name"><%= recipe.firstName %> <%= recipe.lastName %></p>
                           <p><strong class="cuisine"> <%= recipe.cuisine %> </strong> | <span class="difficulty"><%= recipe.difficulty %></span> </p>
                           <p>
                             <i class="fa fa-cutlery"></i> <span class="servings"><%= recipe.servings %></span>
@@ -115,7 +115,6 @@
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>" data-prep-time="<%= recipe.servings %>" data-cook-time="<%= recipe.cookTime %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
                           View More
                         </a>
-
                         <br>
                       </div>
                     </div>

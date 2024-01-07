@@ -38,6 +38,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active"><a href="<%= user && user.userType === 'contributor' ? '/contributorHomepage' : '/viewerHomepage' %>" class="nav-link">Home</a></li>
             <li class="nav-item"><a href="/myBrowser" class="nav-link">Browse Recipes</a></li>
+            <li class="nav-item"><a href="/bookmarkedRecipes" class="nav-link">Bookmarked Recipes</a></li>
             <% if (user && user.userType !== 'viewer') { %>
                <li class="nav-item"><a href="/myRecipes" class="nav-link">My Recipes</a></li>
                <li class="nav-item cta"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
