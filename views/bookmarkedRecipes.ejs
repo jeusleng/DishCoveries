@@ -112,9 +112,23 @@
                           </p>
                         </div>
 
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>" data-prep-time="<%= recipe.servings %>" data-cook-time="<%= recipe.cookTime %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
-                          View More
-                        </a>
+                        <div class="buttons-container">
+                          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal"
+                            data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>"
+                            data-difficulty="<%= recipe.difficulty %>"
+                            data-recipe-image="/uploads/<%= recipe.recipeImage %>"
+                            data-prep-time="<%= recipe.servings %>" data-cook-time="<%= recipe.cookTime %>"
+                            data-ingredients="<%= recipe.ingredients %>"
+                            data-instructions="<%= recipe.instructions %>">
+                            View More
+                          </a>
+                          <button class="btn btn-outline-secondary unbookmark-btn" data-recipe-id="<%= recipe.id %>"
+                            data-user-id="<%= user.userID %>">
+                            <i class="fa fa-bookmark"></i>
+                          </button>
+
+                        </div>
+
                         <br>
                       </div>
                     </div>
@@ -272,38 +286,40 @@
 
 
 
-    $(document).ready(function() {
-      // Attach click event handler to the bookmark button
-      $('.bookmark-btn').click(function(e) {
-        e.preventDefault();
+    $('.unbookmark-btn').click(function (e) {
+    e.preventDefault();
 
-        // Get the recipe ID from the data-recipe-id attribute
-        var recipeID = $(this).data('recipe-id');
+    // Correct the attribute name to 'data-user-id'
+    var userID = $(this).data('user-id');
+    var recipeID = $(this).data('recipe-id');
+    var recipeCard = $(this).closest('.recipe-card');
 
-        // Send an AJAX request to the server
-        $.ajax({
-          url: '/addBookmark', // Change this URL to match your server endpoint
-          method: 'POST',
-          data: {
-            recipeID: recipeID
-          },
-          success: function(response) {
-            // Handle the response from the server
-            console.log(response);
+    console.log('Recipe ID:', recipeID);
+    console.log('User ID:', userID);
+
+    $.ajax({
+        url: '/removeBookmark',
+        method: 'POST',
+        data: {
+            recipeID: recipeID,
+            userID: userID
+        },
+        success: function (response) {
+            console.log('AJAX Success - Response:', response);
+
             if (response.success) {
-              // Update the UI or provide feedback to the user
-              console.log('Bookmark added successfully');
+                console.log('Bookmark removed successfully');
+                recipeCard.remove();
             } else {
-              console.error('Failed to add bookmark');
+                console.error('Failed to remove bookmark');
             }
-          },
-          error: function(error) {
-            // Handle the error
-            console.error(error);
-          }
-        });
-      });
+        },
+        error: function (error) {
+            console.error('AJAX Error:', error);
+        }
     });
+});
+
 
     // Get the recipe cards container
     var recipeCardsContainer = $('#recipeCardsContainer');

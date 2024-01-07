@@ -50,6 +50,7 @@ router.get('/myBrowser', islogin, controller.browseRecipes);
 // Ensure that 'islogin' is placed before 'controller.getMyBookmarks'
 router.get('/bookmarkedRecipes', islogin, controller.getMyBookmarks);
 router.post('/addBookmark', controller.addbookMarkRecipe);
+router.post('/removeBookmark', controller.removeRecipeBookmark);
 
 router.post('/recipes/approve/:id', controller.approveRecipe);
 router.post('/recipes/reject/:id', controller.rejectRecipe);

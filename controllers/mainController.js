@@ -533,3 +533,76 @@ console.log('Recipe Name:', recipeName);
   });
 };
 
+exports.addbookMarkRecipe = (req, res) => {
+  const user = req.session.user;
+
+  if (!user) {
+    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  }
+
+  const { recipeName } = req.body;
+  
+  const checkBookmarkQuery = `
+    SELECT bookmarks.id
+    FROM bookmarks
+    JOIN recipes ON bookmarks.recipeID = recipes.id
+    WHERE bookmarks.userID = ? AND recipes.recipeName = ?
+  `;
+
+  pool.query(checkBookmarkQuery, [user.id, recipeName], (checkError, checkResults) => {
+    if (checkError) {
+      console.error('Error checking bookmark:', checkError);
+      return res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+
+    if (checkResults.length > 0) {
+      return res.status(400).json({ success: false, error: 'Recipe already bookmarked' });
+    }
+
+    const selectQuery = 'SELECT id FROM recipes WHERE recipeName = ?';
+
+    pool.query(selectQuery, [recipeName], (selectError, selectResults) => {
+      if (selectError) {
+        console.error('Error selecting recipe ID:', selectError);
+        return res.status(500).json({ success: false, error: 'Internal Server Error' });
+      }
+
+      if (selectResults.length === 0) {
+        return res.status(404).json({ success: false, error: 'Recipe not found' });
+      }
+
+      const recipeID = selectResults[0].id;
+
+      const userID = user.id;
+      const insertQuery = 'INSERT INTO bookmarks (userID, recipeID) VALUES (?, ?)';
+
+      pool.query(insertQuery, [userID, recipeID], (insertError, insertResults) => {
+        if (insertError) {
+          console.error('Error adding bookmark:', insertError);
+          return res.status(500).json({ success: false, error: 'Internal Server Error' });
+        }
+
+        res.json({ success: true });
+      });
+    });
+  });
+};
+
+exports.removeRecipeBookmark = (req, res) => {
+  const userID = req.session.userID;
+
+  const { recipeID } = req.body;
+
+  const query = 'DELETE FROM bookmarks WHERE recipeID = ? ';
+  pool.query(query, [recipeID, userID], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ success: false, error: 'Failed to remove bookmark from database' });
+    } else {
+      res.json({ success: true, message: 'Bookmark removed successfully' });
+    }
+  });
+};
+
+
+
