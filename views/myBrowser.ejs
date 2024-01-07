@@ -69,72 +69,88 @@
   </section>
   <section class="ftco-section" style="margin-top: -130px;">
     <div class="container">
-      <div class="ftco-search">
-        <div class="col-md-12 nav-link-wrap">
-          <div class="col-md-12 tab-wrap">
+        <div class="ftco-search">
+            <div class="col-md-12 nav-link-wrap">
+                <div class="col-md-12 tab-wrap">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <input type="text" id="searchInput" class="form-control"
+                                            placeholder="Search recipes...">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text search-icon-bg"><i
+                                                    class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="recipeCardsContainer"
+                                class="row no-gutters d-flex align-items-stretch justify-content-center align-items-center">
+                                <% if (recipes.length === 0) { %>
+                                <div class="col-md-12 text-center">
+                                    <p><strong>You haven't added any recipes yet.</strong></p>
+                                </div>
+                                <% } else { %>
+                                <!-- Use a forEach loop to dynamically generate recipe content -->
+                                <% recipes.forEach(recipe => { %>
+                                <div
+                                    class="col-md-12 col-lg-3 d-flex align-self-stretch recipe-card">
+                                    <div class="menus d-sm-flex ftco-animate align-items-stretch">
+                                        <!-- Place the menu-img div inside the text div for better alignment -->
+                                        <div class="d-flex align-items-center flex-column">
+                                            <br>
+                                            <!-- Use the img tag to display the image -->
+                                            <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>"
+                                                class="menu-img img-fluid"
+                                                style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
+                                            <div class="mt-2">
+                                                <h5 class="recipe-name"><strong><%= recipe.recipeName %></strong></h5>
+                                                <p class="contributor-name"><%= recipe.contributorName %> <%= recipe.lastName %></p>
+                                                <p><strong class="cuisine"> <%= recipe.cuisine %> </strong> |
+                                                    <span class="difficulty"><%= recipe.difficulty %></span> </p>
+                                                <p>
+                                                    <i class="fa fa-cutlery"></i> <span
+                                                        class="servings"><%= recipe.servings %></span>
+                                                    <i class="fa fa-clock-o"></i> <span
+                                                        class="cook-time"><%= recipe.cookTime %></span>
+                                                </p>
+                                            </div>
+
+                                            <a href="#" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#recipeModal"
+                                                data-recipe-name="<%= recipe.recipeName %>"
+                                                data-cuisine="<%= recipe.cuisine %>"
+                                                data-difficulty="<%= recipe.difficulty %>"
+                                                data-recipe-image="/uploads/<%= recipe.recipeImage %>"
+                                                data-prep-time="<%= recipe.servings %>"
+                                                data-cook-time="<%= recipe.cookTime %>"
+                                                data-ingredients="<%= recipe.ingredients %>"
+                                                data-instructions="<%= recipe.instructions %>">
+                                                View More
+                                            </a>
+
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% }); %>
 
 
-            <div class="tab-content" id="v-pills-tabContent">
-              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
-                <div class="row mt-3">
-                  <div class="col-md-12">
-                    <div class="input-group">
-                      <input type="text" id="searchInput" class="form-control" placeholder="Search recipes...">
-                      <div class="input-group-append">
-                        <span class="input-group-text search-icon-bg"><i class="fa fa-search"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                <div id="recipeCardsContainer" class="row no-gutters d-flex align-items-stretch">
-                  <% if (recipes.length === 0) { %>
-                  <div class="col-md-12 text-center">
-                    <p><strong>You haven't added any recipes yet.</strong></p>
-                  </div>
-                  <% } else { %>
-                  <!-- Use a forEach loop to dynamically generate recipe content -->
-                  <% recipes.forEach(recipe => { %>
-                  <div class="col-md-12 col-lg-3 d-flex align-self-stretch recipe-card">
-                    <div class="menus d-sm-flex ftco-animate align-items-stretch">
-                      <!-- Place the menu-img div inside the text div for better alignment -->
-                      <div class="d-flex align-items-center flex-column">
-                        <br>
-                        <!-- Use the img tag to display the image -->
-                        <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
-                        <div class="mt-2">
-                          <h5 class="recipe-name"><strong><%= recipe.recipeName %></strong></h5>
-                          <p class="contributor-name"><%= recipe.contributorName %> <%= recipe.lastName %></p>
-                          <p><strong class="cuisine"> <%= recipe.cuisine %> </strong> | <span class="difficulty"><%= recipe.difficulty %></span> </p>
-                          <p>
-                            <i class="fa fa-cutlery"></i> <span class="servings"><%= recipe.servings %></span>
-                            <i class="fa fa-clock-o"></i> <span class="cook-time"><%= recipe.cookTime %></span>
-                          </p>
+                                <% } %>
+                            </div>
                         </div>
-
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>" data-prep-time="<%= recipe.servings %>" data-cook-time="<%= recipe.cookTime %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
-                          View More
-                        </a>
-
-                        <br>
-                      </div>
                     </div>
-                  </div>
-
-                  <% }); %>
-
-
-
-                  <% } %>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-
     </div>
-  </section>
+</section>
+
 
   <!-- Modal -->
   <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
