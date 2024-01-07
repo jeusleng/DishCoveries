@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 exports.getHome = (req, res) => {
   // Fetch all recipes from the database
-  const sql = 'SELECT * FROM recipes';
+  const sql = 'SELECT * FROM recipes WHERE status = "approved"';
 
   pool.query(sql, (err, recipes) => {
     if (err) {
