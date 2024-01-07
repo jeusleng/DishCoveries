@@ -377,6 +377,12 @@ mark,
   .list-inline-item:not(:last-child) {
     margin-right: 0.5rem; }
 
+
+    .search-icon-bg {
+      background-color: #c8a97e !important;
+      color: white !important;
+    }
+    
 .initialism {
   font-size: 90%;
   text-transform: uppercase; }

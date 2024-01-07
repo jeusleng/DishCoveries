@@ -44,7 +44,7 @@
           <% if (user && user.userType == 'contributor') { %>
           <li class="nav-item cta"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
           <% } %>
-          <li class="nav-item"><a href="/logout" class="nav-link">Logout  <i class="fa fa-sign-out"></i></a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout <i class="fa fa-sign-out"></i></a></li>
 
         </ul>
       </div>
@@ -66,7 +66,7 @@
       </div>
     </div>
   </section>
-  <section class="ftco-section">
+  <section class="ftco-section" style="margin-top: -130px;">
     <div class="container">
       <div class="ftco-search">
         <div class="col-md-12 nav-link-wrap">
@@ -75,7 +75,18 @@
 
             <div class="tab-content" id="v-pills-tabContent">
               <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
-                <div class="row no-gutters d-flex align-items-stretch">
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="text" id="searchInput" class="form-control" placeholder="Search recipes...">
+                      <div class="input-group-append">
+                        <span class="input-group-text search-icon-bg"><i class="fa fa-search"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="recipeCardsContainer" class="row no-gutters d-flex align-items-stretch">
                   <% if (recipes.length === 0) { %>
                   <div class="col-md-12 text-center">
                     <p><strong>You haven't added any recipes yet.</strong></p>
@@ -91,13 +102,15 @@
                         <!-- Use the img tag to display the image -->
                         <img src="/uploads/<%= recipe.recipeImage %>" alt="<%= recipe.recipeName %>" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
                         <div class="mt-2">
-                          <h5><strong><%= recipe.recipeName %></strong></h5>
-                          <p><%= recipe.contributorName %> <%= recipe.lastName %></p>
-                          <p><strong> <%= recipe.cuisine %> </strong> | <%= recipe.difficulty %> </p>
+                          <h5 class="recipe-name"><strong><%= recipe.recipeName %></strong></h5>
+                          <p class="contributor-name"><%= recipe.contributorName %> <%= recipe.lastName %></p>
+                          <p><strong class="cuisine"> <%= recipe.cuisine %> </strong> | <span class="difficulty"><%= recipe.difficulty %></span> </p>
                           <p>
-                            <i class="fa fa-cutlery"></i> <%= recipe.servings %> <i class="fa fa-clock-o"></i> <%= recipe.cookTime %>
+                            <i class="fa fa-cutlery"></i> <span class="servings"><%= recipe.servings %></span>
+                            <i class="fa fa-clock-o"></i> <span class="cook-time"><%= recipe.cookTime %></span>
                           </p>
                         </div>
+
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal" data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>" data-difficulty="<%= recipe.difficulty %>" data-recipe-image="/uploads/<%= recipe.recipeImage %>" data-prep-time="<%= recipe.servings %>" data-cook-time="<%= recipe.cookTime %>" data-ingredients="<%= recipe.ingredients %>" data-instructions="<%= recipe.instructions %>">
                           View More
                         </a>
@@ -153,7 +166,7 @@
                 </div>
               </div>
             </div>
-          </div>          
+          </div>
           <!-- Ingredients and instructions below -->
           <div class="row mt-4">
             <div class="col-md-12">
@@ -290,6 +303,59 @@
           }
         });
       });
+    });
+
+    // Get the recipe cards container
+    var recipeCardsContainer = $('#recipeCardsContainer');
+
+    // Get all recipe cards
+    var allRecipeCards = $('.recipe-card');
+
+    // Store the initial content of the recipe cards container
+    var initialRecipeCardsHtml = recipeCardsContainer.html();
+
+    // Get the search input element
+    var searchInput = $('#searchInput');
+
+    // Attach event listener for keyup on the search input
+    searchInput.on('keyup', function() {
+      // Get the search query
+      var searchQuery = $(this).val().toLowerCase();
+
+      // Filter recipe cards based on the search query
+      var filteredRecipeCards = allRecipeCards.filter(function() {
+        // Get the data attributes from the current card
+        var recipeName = $(this).find('h5').text().toLowerCase();
+        var contributorName = $(this).find('.contributor-name').text().toLowerCase();
+        var cuisine = $(this).find('.cuisine').text().toLowerCase();
+        var difficulty = $(this).find('.difficulty').text().toLowerCase();
+        var servings = $(this).find('.servings').text().toLowerCase();
+        var cookTime = $(this).find('.cook-time').text().toLowerCase();
+
+        // Check if any of the properties contain the search query
+        return (
+          recipeName.includes(searchQuery) ||
+          contributorName.includes(searchQuery) ||
+          cuisine.includes(searchQuery) ||
+          difficulty.includes(searchQuery) ||
+          servings.includes(searchQuery) ||
+          cookTime.includes(searchQuery)
+        );
+      });
+
+      // Display the filtered recipe cards or show "No results"
+      if (filteredRecipeCards.length > 0) {
+        recipeCardsContainer.html(filteredRecipeCards);
+      } else {
+        recipeCardsContainer.html('<div class="col-md-12 text-center"><p><strong>No results</strong></p></div>');
+      }
+    });
+
+    // Reset the recipe cards container to its initial content when the search input is empty
+    searchInput.on('change', function() {
+      if ($(this).val().trim() === '') {
+        recipeCardsContainer.html(initialRecipeCardsHtml);
+      }
     });
   </script>
 

@@ -24,16 +24,13 @@
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
-
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a style="font-size: 35px;" class="navbar-brand" href="/contributorHomepage">DishCoveries</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> Menu
       </button>
 
@@ -51,24 +48,20 @@
   </nav>
   <!-- END nav -->
 
-  <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');"
-    data-stellar-background-ratio="0.5">
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_3.jpg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate text-center mb-4">
           <h1 class="mb-2 bread">My Recipes</h1>
-          <p class="breadcrumbs"><span class="mr-2">Welcome to your personalized recipe collection! On this page, you
-              can manage, view, and edit all the recipes you've contributed. This is your space to showcase your
-              culinary creations and keep track of your favorite recipes. Feel free to explore, update, and share your
-              delicious recipes with the DishCoveries community.</span>
+          <p class="breadcrumbs"><span class="mr-2">Welcome to your personalized recipe collection! On this page, you can manage, view, and edit all the recipes you've contributed. This is your space to showcase your culinary creations and keep track of your favorite recipes. Feel free to explore, update, and share your delicious recipes with the DishCoveries community.</span>
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="ftco-section">
+  <section class="ftco-section" style="margin-top: -130px;">
     <div class="container">
       <div class="ftco-search">
         <div class="col-md-12 nav-link-wrap">
@@ -84,107 +77,133 @@
                     Search</button>
                 </form>
 
-
-                <div class="row no-gutters d-flex align-items-stretch mt-3">
-                  <% if (recipes.length===0) { %>
-                    <div class="col-md-12 text-center">
-                      <p><strong>You haven't added any recipes yet.</strong></p>
+                <!-- <div class="row mt-3">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <input type="text" id="searchInput" class="form-control" placeholder="Search recipes...">
+                      <div class="input-group-append">
+                        <span class="input-group-text search-icon-bg"><i class="fa fa-search"></i></span>
+                      </div>
                     </div>
-                    <% } else { %>
-                      <% recipes.forEach(recipe=> { %>
-                        <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
-                          <div class="menus d-sm-flex ftco-animate align-items-stretch">
-                            <div class="menu-img img"
-                              style="background-image: url('/uploads/<%= recipe.recipeImage %>');"></div>
+                  </div>
+                </div> -->
 
-                            <div class="text d-flex align-items-center">
-                              <div>
-                                <div class="d-flex">
-                                  <div>
-                                    <h3><strong>
-                                        <%= recipe.recipeName %>
-                                      </strong></h3>
-                                  </div>
+                <div class="row no-gutters d-flex align-items-stretch" style="margin-top: 30px;">
+                  <% if (recipes.length === 0) { %>
+                  <!-- Display message when the user has no recipes -->
+                  <div class="col-md-12 text-center">
+                    <p><strong>You haven't added any recipes yet.</strong></p>
+                  </div>
+                  <% } else { %>
+                  <!-- Use a forEach loop to dynamically generate recipe content -->
+                  <% recipes.forEach(recipe => { %>
+                  <div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+                    <div class="menus d-sm-flex ftco-animate align-items-stretch">
+                      <div class="menu-img img" style="background-image: url('/uploads/<%= recipe.recipeImage %>');"></div>
+
+                      <div class="text d-flex align-items-center">
+                        <div>
+                          <div class="d-flex">
+                            <div>
+                              <h3><strong><%= recipe.recipeName %></strong></h3>
+                            </div>
+                          </div>
+                          <div>
+                            <p>
+                              <strong><%= recipe.cuisine %></strong> | <%= recipe.difficulty %>
+                            </p>
+                          </div>
+
+                          <div style="margin-bottom: 5px;">
+                            <p>
+                              <strong class="<%= recipe.status === 'approved' ? 'text-success' : (recipe.status === 'pending' ? 'text-warning' : 'text-danger') %>">
+                                <%= recipe.status.charAt(0).toUpperCase() + recipe.status.slice(1) %>
+                              </strong>
+                            </p>
+                          </div>
+
+
+
+                          <a href="#" class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#recipeModal"
+  data-recipe-name="<%= recipe.recipeName %>"
+  data-cuisine="<%= recipe.cuisine %>"
+  data-difficulty="<%= recipe.difficulty %>"
+  data-status="<%= recipe.status %>"
+  data-cook-time="<%= recipe.cookTime %>"
+  data-servings="<%= recipe.servings %>"
+  data-recipe-image="/uploads/<%= recipe.recipeImage %>"
+  data-ingredients="<%= recipe.ingredients %>"
+  data-instructions="<%= recipe.instructions %>"
+  data-reject-reason="<%= recipe.rejectReason %>">
+  <span class="<%= recipe.status === 'approved' ? 'bi bi-thumbs-up-fill text-success' : (recipe.status === 'pending' ? 'bi bi-clock text-warning' : 'bi bi-thumbs-down-fill text-danger') %>"></span>
+  View More
+</a>
+
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }); %>
+                  <% } %>
+                 
+                  <!-- Modal -->
+                  <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 style="font-weight: bold;">Recipe Details</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="card shadow p-3 mb-5 bg-white rounded" style="border-radius: 10px !important;">
+                            <div class="row" style="margin-bottom: -40px;">
+                              <!-- Circular image on the left -->
+                              <div class="col-md-4 text-center">
+                                <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
+                                  <img id="recipeImage" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
                                 </div>
-                                <div>
+                              </div>
+                              <!-- Recipe details on the right -->
+                              <div class="col-md-8" style="margin-bottom: 20px;">
+                                <div class="recipe-details">
+                                  <h2 id="recipeName" class="mb-3"></h2>
+                                  <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
+                                  <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
+                                  <p><strong>Status:</strong> <span id="status"></span></p>
+                                  <p><strong>Reason why recipe was rejected:</strong> <span id="rejectReason"></span></p>
+
                                   <p>
-                                    <strong>
-                                      <%= recipe.cuisine %>
-                                    </strong> | <%= recipe.difficulty %>
+                                    <i class="fa fa-cutlery"></i> <span id="servings"></span> <i class="fa fa-clock-o"></i> <span id="cookTime"></span>
                                   </p>
                                 </div>
-
-                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#recipeModal"
-                                  data-recipe-name="<%= recipe.recipeName %>" data-cuisine="<%= recipe.cuisine %>"
-                                  data-difficulty="<%= recipe.difficulty %>"
-                                  data-recipe-image="/uploads/<%= recipe.recipeImage %>"
-                                  data-ingredients="<%= recipe.ingredients %>"
-                                  data-instructions="<%= recipe.instructions %>">
-                                  View More
-                                </a>
-
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <% }); %>
-                          <% } %>
-                            <!-- Modal -->
-                            <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog"
-                              aria-labelledby="recipeModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 style="font-weight: bold;">Recipe Details</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <div class="card shadow p-3 mb-5 bg-white rounded"
-                                      style="border-radius: 10px !important;">
-                                      <div class="row" style="margin-bottom: -40px;">
-                                        <!-- Circular image on the left -->
-                                        <div class="col-md-4 text-center">
-                                          <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
-                                            <img id="recipeImage" class="menu-img img-fluid"
-                                              style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
-                                          </div>
-                                        </div>
-                                        <!-- Recipe details on the right -->
-                                        <div class="col-md-8">
-                                          <div class="recipe-details">
-                                            <h2 id="recipeName" class="mb-3"></h2>
-                                            <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
-                                            <p><strong>Difficulty:</strong> <span id="difficulty"></span></p>
-                                            <p>
-                                              <i class="fa fa-cutlery"></i> <span id="servings"></span> <i
-                                                class="fa fa-clock-o"></i> <span id="cookTime"></span>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <!-- Ingredients and instructions below -->
-                                    <div class="row mt-4">
-                                      <div class="col-md-12">
-                                        <h3>Ingredients</h3>
-                                        <ul id="ingredients" class="list-unstyled"></ul>
-                                      </div>
-                                    </div>
-                                    <div class="row mt-4">
-                                      <div class="col-md-12">
-                                        <h3>Instructions</h3>
-                                        <ol id="instructions" class="list-unstyled"></ol>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  </div>
-                                </div>
-                              </div>
+                          <!-- Ingredients and instructions below -->
+                          <div class="row mt-4">
+                            <div class="col-md-12">
+                              <h3>Ingredients</h3>
+                              <ul id="ingredients" class="list-unstyled"></ul>
                             </div>
+                          </div>
+                          <div class="row mt-4">
+                            <div class="col-md-12">
+                              <h3>Instructions</h3>
+                              <ol id="instructions" class="list-unstyled"></ol>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
 
                 </div>
@@ -205,12 +224,9 @@
         <div class="col-md-12 text-center">
 
           <p>
-            Copyright &copy;
-            <script>
+            Copyright &copy;<script>
               document.write(new Date().getFullYear());
-            </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by
-            <a href="" target="_blank">4D</a>
-          </p>
+            </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="" target="_blank">4D</a></p>
         </div>
       </div>
     </div>
@@ -220,8 +236,7 @@
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
     </svg></div>
 
 
@@ -240,44 +255,57 @@
   <script src="js/main.js"></script>
 
   <script>
-    $('#recipeModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget);
-      var recipeName = button.data('recipe-name');
-      var cuisine = button.data('cuisine');
-      var difficulty = button.data('difficulty');
-      var status = button.data('status');
-      var cookTime = button.data('cookTime');
-      var servings = button.data('servings');
-      var recipeImage = button.data('recipe-image');
-      var ingredientsString = button.data('ingredients'); 
-      var instructionsString = button.data('instructions'); 
+   $('#recipeModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var recipeName = button.data('recipe-name');
+    var cuisine = button.data('cuisine');
+    var difficulty = button.data('difficulty');
+    var status = button.data('status');
+    var cookTime = button.data('cookTime');
+    var servings = button.data('servings');
+    var recipeImage = button.data('recipe-image');
+    var ingredientsString = button.data('ingredients');
+    var instructionsString = button.data('instructions');
+    var rejectReason = button.data('reject-reason'); // New line for reject reason
 
-      var ingredients = ingredientsString ? ingredientsString.split(',').map(ingredient => ingredient.trim()) : [];
-      var instructions = instructionsString ? instructionsString.split('.,').map(instruction => instruction.trim()) : [];
-  
-      var modal = $(this);
-      modal.find('.modal-title').text(recipeName);
-      modal.find('#recipeName').text(recipeName);
-      modal.find('#cuisine').text(cuisine);
-      modal.find('#difficulty').text(difficulty);
-      modal.find('#servings').text(servings); 
-      modal.find('#cookTime').text(cookTime); 
-      modal.find('#recipeImage').attr('src', recipeImage);
+    var ingredients = ingredientsString ? ingredientsString.split(',').map(ingredient => ingredient.trim()) : [];
+    var instructions = instructionsString ? instructionsString.split('.,').map(instruction => instruction.trim()) : [];
 
-      var ingredientsHtml = '<ol>';
-      ingredients.forEach(function (ingredient, index) {
-        ingredientsHtml += '<li>' + ingredient + '</li>';
-      });
-      ingredientsHtml += '</ul>';
-      modal.find('#ingredients').html(ingredientsHtml);
+    var modal = $(this);
+    modal.find('.modal-title').text(recipeName);
+    modal.find('#recipeName').text(recipeName);
+    modal.find('#cuisine').text(cuisine);
+    modal.find('#difficulty').text(difficulty);
 
-      var instructionsHtml = '<ol>';
-      instructions.forEach(function (instruction, index) {
-        instructionsHtml += '<li>' + instruction + '</li>';
-      });
-      instructionsHtml += '</ol>';
-      modal.find('#instructions').html(instructionsHtml);
+    // Capitalize the first letter of status
+    modal.find('#status').text(status.charAt(0).toUpperCase() + status.slice(1));
+
+    // Display reject reason only if status is 'rejected'
+    if (status === 'rejected') {
+      modal.find('#rejectReason').text(rejectReason);
+    } else {
+      // If status is 'approved' or 'pending', hide the reject reason element
+      modal.find('#rejectReason').parent().hide();
+    }
+
+    modal.find('#servings').text(servings);
+    modal.find('#cookTime').text(cookTime);
+    modal.find('#recipeImage').attr('src', recipeImage);
+
+    var ingredientsHtml = '<ul>';
+    ingredients.forEach(function (ingredient, index) {
+      ingredientsHtml += '<li>' + ingredient + '</li>';
     });
+    ingredientsHtml += '</ul>';
+    modal.find('#ingredients').html(ingredientsHtml);
+
+    var instructionsHtml = '<ol>';
+    instructions.forEach(function (instruction, index) {
+      instructionsHtml += '<li>' + instruction + '</li>';
+    });
+    instructionsHtml += '</ol>';
+    modal.find('#instructions').html(instructionsHtml);
+  });
   </script>
 
 
