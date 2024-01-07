@@ -45,7 +45,7 @@
           <% if (user && user.userType == 'contributor') { %>
           <li class="nav-item cta"><a href="/addRecipePage" class="nav-link">Add a Recipe</a></li>
           <% } %>
-          <li class="nav-item"><a href="/logout" class="nav-link">Logout  <i class="fa fa-sign-out"></i></a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout <i class="fa fa-sign-out"></i></a></li>
 
         </ul>
       </div>
@@ -59,58 +59,103 @@
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate text-center mb-4">
           <h1 class="mb-2 bread">My Profile</h1>
-            </span>
+          </span>
           </p>
         </div>
       </div>
     </div>
   </section>
-  
-  
- 
+
+
+
   <section class="profile-section">
     <div class="container mt-5">
       <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
+        <div class="col-lg-10 col-md-10">
           <% if (successMessage && successMessage.length > 0) { %>
-            <div class="alert alert-success" role="alert">
-                <%= successMessage[0] %>
-            </div>
-        <% } %>
+          <div class="alert alert-success" role="alert">
+            <%= successMessage[0] %>
+          </div>
+          <% } %>
+
           <div class="card shadow-lg">
             <div class="card-body">
               <!-- Display user details -->
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <h2><%= user.firstName %> <%= user.lastName %></h2>
-                  <p><%= user.userType.charAt(0).toUpperCase() + user.userType.slice(1) %></p>
-                  <% if (user.userType === 'contributor') { %>
-                    <p><%= user.specialty %></p>
-                  <% } %>
-                  <div class="row text-center">
-                    <div class="col-lg text-center">
-                      <p><%= user.gender %> | <%= new Date(user.bdate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></p>
+                  <h2 style="font-weight: bold; color: #c8a97e;"><%= user.firstName %> <%= user.lastName %></h2>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-left" for="userType">
+                      <i class="bi bi-person"></i> User Type:
+                    </label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="userType" value="<%= user.userType.charAt(0).toUpperCase() + user.userType.slice(1) %>" disabled>
+                    </div>
+
+                    <% if (user.userType === 'contributor') { %>
+                    <label class="col-sm-3 col-form-label text-left" for="specialty">
+                      <i class="bi bi-star"></i> Specialty:
+                    </label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="specialty" value="<%= user.specialty %>" disabled>
+                    </div>
+                    <% } else { %>
+                    <div class="col-sm-6"></div>
+                    <% } %>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-left" for="gender">
+                      <i class="bi bi-gender"></i> Gender:
+                    </label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="gender" value="<%= user.gender %>" disabled>
+                    </div>
+
+                    <label class="col-sm-3 col-form-label text-left" for="bdate">
+                      <i class="bi bi-calendar"></i> Birthday:
+                    </label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="bdate" value="<%= new Date(user.bdate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %>" disabled>
                     </div>
                   </div>
-                  
-                  <p><%= user.address %></p>
-                  <p><%= user.email %></p>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-left" for="email">
+                      <i class="bi bi-envelope"></i> Email:
+                    </label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="email" value="<%= user.email %>" disabled>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-left" for="address">
+                      <i class="bi bi-house-door"></i> Address:
+                    </label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="address" value="<%= user.address %>" disabled>
+                    </div>
+                  </div>
                 </div>
               </div>
-            
+
               <!-- Button to open edit modal -->
-              <div class="text-center">
-                <button class="btn btn-primary mt-3" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+              <div class="text-center mt-3">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
               </div>
-                          </div>
-            
+            </div>
           </div>
         </div>
       </div>
 
+
+
+
       <!-- Modal for updating user information -->
       <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
@@ -120,16 +165,17 @@
             </div>
             <div class="modal-body">
               <form id="updateProfileForm" action="/updateProfile" method="post">
-                <div class="form-group">
-                  <label for="newFirtName">First Name:</label>
-                  <input type="text" class="form-control" id="firstName" name="firstName" value="<%= user.firstName %>" required>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="newFirtName">First Name:</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" value="<%= user.firstName %>" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="newLastName">Last Name:</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" value="<%= user.lastName %>" required>
+                  </div>
                 </div>
-                
-                <div class="form-group">
-                  <label for="newLastName">Last Name:</label>
-                  <input type="text" class="form-control" id="lastName" name="lastName" value="<%= user.lastName %>" required>
-                </div>
-              
+
                 <div class="form-group">
                   <label for="newGender">Gender:</label>
                   <select class="form-control" id="newGender" name="gender" required>
@@ -139,47 +185,33 @@
                     <!-- Add more options as needed -->
                   </select>
                 </div>
-              
-                <!-- <div class="form-group">
-                  <label for="newBdate">Birthdate:</label>
-                  <input type="date" class="form-control" id="newBdate" name="bdate" value="<%= user.bdate %>" required>
-                </div> -->
-              
+
                 <div class="form-group">
                   <label for="newEmail">Email:</label>
                   <input type="email" class="form-control" id="newEmail" name="email" value="<%= user.email %>" required>
                 </div>
-              
+
                 <div class="form-group">
                   <label for="newAddress">Address:</label>
                   <textarea class="form-control" id="newAddress" name="address" rows="3" required><%= user.address %></textarea>
                 </div>
-              
-                <div class="form-group">
-                  <label for="newUserType">User Type:</label>
-                  <select class="form-control" id="newUserType" name="userType" required>
-                    <option value="select" disabled>Select User Type</option>
-                    <option value="Contributor" <%= user.userType === 'Contributor' ? 'selected' : '' %>>Contributor</option>
-                    <option value="Regular User" <%= user.userType === 'Regular User' ? 'selected' : '' %>>Regular User</option>
-                    <!-- Add more options as needed -->
-                  </select>
-                </div>
-              
+
+                <!-- Add other fields here -->
+
                 <div class="form-group">
                   <label for="newSpecialty">Specialty:</label>
-                  <input type="text" class="form-control" id="newSpecialty" name="specialty" value="<%= user.specialty %>" >
+                  <input type="text" class="form-control" id="newSpecialty" name="specialty" value="<%= user.specialty %>">
                 </div>
-              
-              
+
                 <!-- Add other fields here -->
-              
+
                 <button type="submit" class="btn btn-primary">Update</button>
               </form>
-              
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </section>
   <footer class="ftco-footer ftco-bg-dark ftco-section">
