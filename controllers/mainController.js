@@ -10,8 +10,22 @@ const pool = mysql.createPool({
 });
 
 exports.getHome = (req, res) => {
-  res.render('index');
+  // Fetch all recipes from the database
+  const sql = 'SELECT * FROM recipes';
+
+  pool.query(sql, (err, recipes) => {
+    if (err) {
+      console.error('Error fetching recipes:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    // Render the template with the fetched recipes
+    res.render('index', { recipes: recipes });
+  });
 };
+
+
 
 
 exports.registerUser = async (req, res) => {
