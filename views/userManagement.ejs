@@ -41,12 +41,6 @@
 
     <div class="pagetitle">
       <h1>Users Management</h1>
-      <!-- <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item ">Dashboard</li>
-                </ol>
-            </nav> -->
     </div><!-- End Page Title -->
 
     <section>
@@ -56,7 +50,7 @@
         <%= successMessages[0] %>
       </div>
       <% } %>
-      <div class="card p-5 mt-3">
+      <div class="card p-5 mt-3 shadow-lg">
         <div class="card-body">
           <table id="myTable" class="display">
             <thead>
@@ -65,8 +59,6 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Gender</th>
-                <!-- <th>BirthDate</th>
-                                <th>Address</th> -->
                 <th>User Type</th>
                 <th>Email</th>
                 <th>Status</th>
@@ -147,7 +139,7 @@
           const status = $(this).data('status');
           // Send AJAX request to update status
           $.ajax({
-            url: '/update-status', // Update the URL to match your server route
+            url: '/update-status',
             method: 'POST',
             data: {
               id: userId,
@@ -184,7 +176,7 @@
       &copy; Copyright <strong><span>DishCoveries</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      <div class="credits">Designed by <a href="">Pabebe Ghurls</a>
+      <div class="credits">Designed by <a href="">Jus, Rhox, Roj, & Chriza</a>
       </div>
   </footer><!-- End Footer -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

@@ -198,10 +198,12 @@
 
                 <!-- Add other fields here -->
 
+                <% if (user.userType !== 'viewer') { %>
                 <div class="form-group">
                   <label for="newSpecialty">Specialty:</label>
                   <input type="text" class="form-control" id="newSpecialty" name="specialty" value="<%= user.specialty %>">
                 </div>
+                <% } %>
 
                 <!-- Add other fields here -->
 
@@ -223,7 +225,7 @@
           <p>
             Copyright &copy;<script>
               document.write(new Date().getFullYear());
-            </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="" target="_blank">4D</a></p>
+            </script> All rights reserved | This website was developed by <i class="icon-heart" aria-hidden="true"></i> <a href="" target="_blank">Jus, Rhox, Roj, & Chriza</a></p>
         </div>
       </div>
     </div>

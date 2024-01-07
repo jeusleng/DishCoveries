@@ -118,12 +118,6 @@
 
     <div class="pagetitle">
       <h1>Recipe Requests</h1>
-      <!-- <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item ">Dashboard</li>
-                </ol>
-            </nav> -->
     </div><!-- End Page Title -->
 
     <section>
@@ -134,7 +128,7 @@
       </div>
       <% } %>
 
-      <div class="card p-5 mt-3">
+      <div class="card p-5 mt-3 shadow-lg">
         <div class="card-body">
           <table id="myTable" class="display">
             <thead>
@@ -144,12 +138,7 @@
                 <th>Recipe Name</th>
                 <th>Cuisine</th>
                 <th>Status</th>
-                <!-- <th>Preparation Time</th>
-                        <th>Cook Time</th>
-                        <th>Servings</th>
-                        <th>Difficulty</th> -->
                 <th>Action</th>
-                <!-- Add your desired columns here -->
               </tr>
             </thead>
             <tbody>
@@ -251,35 +240,35 @@
           $('#rejectModal').modal('show');
 
           // Handle submit button click
-    $('#submitRejectReason').click(function() {
-        // Get the reject reason from the input field
-        var rejectReason = $('#rejectReasonInput').val();
+          $('#submitRejectReason').click(function() {
+            // Get the reject reason from the input field
+            var rejectReason = $('#rejectReasonInput').val();
 
-        // If the reject reason is not empty, proceed with the form submission
-        if (rejectReason.trim() !== '') {
-            // Disable the button to prevent multiple submissions
-            $(this).prop('disabled', true);
+            // If the reject reason is not empty, proceed with the form submission
+            if (rejectReason.trim() !== '') {
+              // Disable the button to prevent multiple submissions
+              $(this).prop('disabled', true);
 
-            // Append the reject reason as a hidden input
-            var form = $(event.target).closest('form');
-            $('<input>').attr({
+              // Append the reject reason as a hidden input
+              var form = $(event.target).closest('form');
+              $('<input>').attr({
                 type: 'hidden',
                 name: 'rejectReason',
                 value: rejectReason
-            }).appendTo(form);
-            console.log('Form Data:', form.serialize());
+              }).appendTo(form);
+              console.log('Form Data:', form.serialize());
 
-            // Submit the form
-            form.submit();
+              // Submit the form
+              form.submit();
 
-            // Close the modal
-            $('#rejectModal').modal('hide');
-        } else {
-            alert('Please enter a reject reason.'); // You can customize this alert
-        }
-        
+              // Close the modal
+              $('#rejectModal').modal('hide');
+            } else {
+              alert('Please enter a reject reason.'); // You can customize this alert
+            }
 
-    });
+
+          });
         });
 
 
@@ -357,7 +346,7 @@
     <div class="copyright">
       &copy; Copyright <strong><span>DishCoveries</span></strong>. All Rights Reserved
     </div>
-    <div class="credits">Designed by <a href="">Pabebe Ghurls</a>
+    <div class="credits">Designed by <a href="">Jus, Rhox, Roj, & Chriza</a>
     </div>
   </footer><!-- End Footer -->
 
