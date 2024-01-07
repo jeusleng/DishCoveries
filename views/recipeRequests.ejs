@@ -56,65 +56,65 @@
     <!-- ... Existing code ... -->
     <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="viewModalLabel">View Recipe Details</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <div class="card shadow p-3 mb-5 bg-white rounded" style="border-radius: 10px !important;">
-                      <div class="row" style="margin-bottom: -40px;">
-                          <!-- Circular image on the left -->
-                          <div class="col-md-4 text-center">
-                              <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
-                                  <img id="recipeImage" class="menu-img img-fluid"
-                                      style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
-                              </div>
-                          </div>
-                          <!-- Recipe details on the right -->
-                          <div class="col-md-8" style="margin-bottom: 20px;">
-                              <div class="recipe-details">
-                                  <p><strong>Recipe Name:</strong> <span id="recipeName"></span></p>
-                                  <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
-                                  <p><strong>Category:</strong> <span id="category"></span></p>
-                                  <p><strong>Status:</strong> <span id="status"></span></p>
-                                  <p id="rejectReasonContainer" style="display: none;"><strong>Reject Reason:</strong>
-                                      <span id="rejectReason"></span></p>
-                                  <p>
-                                      <i class="fa fa-cutlery"></i> <span id="servings"></span>
-                                      <i class="fa fa-clock-o"></i> <span id="cookTime"></span>
-                                  </p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-  
-                  <div class="row mt-4">
-                      <div class="col-md-12">
-                          <h3>Description</h3>
-                          <span id="description"></span></p>
-                      </div>
-                  </div>
-  
-                  <!-- Ingredients and instructions below -->
-                  <div class="row mt-4">
-                      <div class="col-md-12">
-                          <h3>Ingredients</h3>
-                          <ul id="ingredients" class="list-unstyled"></ul>
-                      </div>
-                  </div>
-                  <div class="row mt-4">
-                      <div class="col-md-12">
-                          <h3>Instructions</h3>
-                          <ol id="instructions" class="list-unstyled"></ol>
-                      </div>
-                  </div>
-              </div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewModalLabel">View Recipe Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <div class="modal-body">
+            <div class="card shadow p-3 mb-5 bg-white rounded" style="border-radius: 10px !important;">
+              <div class="row" style="margin-bottom: -40px;">
+                <!-- Circular image on the left -->
+                <div class="col-md-4 text-center">
+                  <div style="width: 250px; height: 250px; overflow: hidden; margin: 0 auto;">
+                    <img id="recipeImage" class="menu-img img-fluid" style="width: 200px; height: 200px; border-radius: 10px; object-fit: cover;">
+                  </div>
+                </div>
+                <!-- Recipe details on the right -->
+                <div class="col-md-8" style="margin-bottom: 20px;">
+                  <div class="recipe-details">
+                    <p><strong>Recipe Name:</strong> <span id="recipeName"></span></p>
+                    <p><strong>Cuisine:</strong> <span id="cuisine"></span></p>
+                    <p><strong>Category:</strong> <span id="category"></span></p>
+                    <p><strong>Status:</strong> <span id="status"></span></p>
+                    <p id="rejectReasonContainer" style="display: none;"><strong>Reject Reason:</strong>
+                      <span id="rejectReason"></span>
+                    </p>
+                    <p>
+                      <i class="fa fa-cutlery"></i> <span id="servings"></span>
+                      <i class="fa fa-clock-o"></i> <span id="cookTime"></span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <h3>Description</h3>
+                <span id="description"></span></p>
+              </div>
+            </div>
+
+            <!-- Ingredients and instructions below -->
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <h3>Ingredients</h3>
+                <ul id="ingredients" class="list-unstyled"></ul>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <h3>Instructions</h3>
+                <ol id="instructions" class="list-unstyled"></ol>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
-  
-  
+    </div>
+
+
 
     <div class="pagetitle">
       <h1>Recipe Requests</h1>
@@ -179,12 +179,6 @@
                     <%= recipe.status.charAt(0).toUpperCase() + recipe.status.slice(1) %>
                   </span>
                 </td>
-                
-
-                <!-- <td><%= recipe.prepTime %></td>
-                        <td><%= recipe.cookTime %></td>
-                        <td><%= recipe.servings %></td>
-                        <td><%= recipe.difficulty %></td> -->
                 <td>
                   <div class="dropdown">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -211,7 +205,7 @@
                           <button type="submit" class="dropdown-item reject-btn text-danger">Reject</button>
                         </form>
                       </li>
-                      
+
                     </ul>
                   </div>
               </tr>
@@ -224,13 +218,13 @@
     </section>
     <script type="text/javascript">
       $(document).ready(function() {
-        $('.dropdown-item.reject-btn').click(function (event) {
-  event.preventDefault();
+        $('.dropdown-item.reject-btn').click(function(event) {
+          event.preventDefault();
 
 
-  // Create a Bootstrap modal
-  var modal = `
-    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+          // Create a Bootstrap modal
+          var modal = `<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -239,7 +233,7 @@
           </div>
           <div class="modal-body">
             <label for="rejectReasonInput" class="form-label">Reject Reason:</label>
-            <input type="text" class="form-control" id="rejectReasonInput">
+<input type="text" id="rejectReasonInput" name="rejectReason" class="form-control">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -250,98 +244,101 @@
     </div>
   `;
 
-  // Append the modal to the body
-  $('body').append(modal);
+          // Append the modal to the body
+          $('body').append(modal);
 
-  // Show the modal
-  $('#rejectModal').modal('show');
+          // Show the modal
+          $('#rejectModal').modal('show');
 
-  // Handle submit button click
-  $('#submitRejectReason').click(function () {
-    // Get the reject reason from the input field
-    var rejectReason = $('#rejectReasonInput').val();
+          // Handle submit button click
+    $('#submitRejectReason').click(function() {
+        // Get the reject reason from the input field
+        var rejectReason = $('#rejectReasonInput').val();
 
-    // If the reject reason is not empty, proceed with the form submission
-    if (rejectReason.trim() !== '') {
-      // Disable the button to prevent multiple submissions
-      $(this).prop('disabled', true);
+        // If the reject reason is not empty, proceed with the form submission
+        if (rejectReason.trim() !== '') {
+            // Disable the button to prevent multiple submissions
+            $(this).prop('disabled', true);
 
-      // Append the reject reason as a hidden input
-      var form = $(event.target).closest('form');
-      $('<input>').attr({
-        type: 'hidden',
-        name: 'rejectReason',
-        value: rejectReason
-      }).appendTo(form);
+            // Append the reject reason as a hidden input
+            var form = $(event.target).closest('form');
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'rejectReason',
+                value: rejectReason
+            }).appendTo(form);
+            console.log('Form Data:', form.serialize());
 
-      // Submit the form
-      form.submit();
+            // Submit the form
+            form.submit();
 
-      // Close the modal
-      $('#rejectModal').modal('hide');
-    } else {
-      alert('Please enter a reject reason.'); // You can customize this alert
-    }
-  });
-});
+            // Close the modal
+            $('#rejectModal').modal('hide');
+        } else {
+            alert('Please enter a reject reason.'); // You can customize this alert
+        }
+        
+
+    });
+        });
 
 
         $('#myTable').DataTable();
 
-        $('#viewModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);
-    var recipeName = button.data('recipe-name');
-    var cuisine = button.data('cuisine');
-    var category = button.data('category');
-    var description = button.data('description');
-    var ingredientsString = button.data('ingredients');
-    var instructionsString = button.data('instructions');
-    var image = button.data('image');
-    var status = button.data('status');
-    var rejectReason = button.data('reject-reason');
+        $('#viewModal').on('show.bs.modal', function(event) {
+          var button = $(event.relatedTarget);
+          var recipeName = button.data('recipe-name');
+          var cuisine = button.data('cuisine');
+          var category = button.data('category');
+          var description = button.data('description');
+          var ingredientsString = button.data('ingredients');
+          var instructionsString = button.data('instructions');
+          var image = button.data('image');
+          var status = button.data('status');
+          var rejectReason = button.data('reject-reason');
 
-    var ingredients = ingredientsString ? ingredientsString.split(',').map(ingredient => ingredient.trim()) : [];
-    var instructions = instructionsString ? instructionsString.split('.,').map(instruction => instruction.trim()) : [];
+          var ingredients = ingredientsString ? ingredientsString.split(',').map(ingredient => ingredient.trim()) : [];
+          var instructions = instructionsString ? instructionsString.split('.,').map(instruction => instruction.trim()) : [];
 
-    var modal = $(this);
-    modal.find('.modal-title').text('Recipe Details');
-    modal.find('#recipeName').text(recipeName);
-    modal.find('#cuisine').text(cuisine);
-    modal.find('#category').text(category);
-    modal.find('#description').text(description);
-    modal.find('#recipeImage').attr('src', image);
-    modal.find('#status').text(status);
+          var modal = $(this);
+          modal.find('.modal-title').text('Recipe Details');
+          modal.find('#recipeName').text(recipeName);
+          modal.find('#cuisine').text(cuisine);
+          modal.find('#category').text(category);
+          modal.find('#description').text(description);
+          modal.find('#recipeImage').attr('src', image);
+          modal.find('#status').text(status);
 
-    // Display reject reason if status is 'rejected'
-    if (status === 'rejected') {
-      modal.find('#rejectReasonContainer').show();
-      modal.find('#rejectReason').text(rejectReason);
-    } else {
-      modal.find('#rejectReasonContainer').hide();
-    }
+          // Display reject reason if status is 'rejected'
+          if (status === 'rejected') {
+            modal.find('#rejectReasonContainer').show();
+            modal.find('#rejectReason').text(rejectReason);
+          } else {
+            modal.find('#rejectReasonContainer').hide();
+          }
 
-    var servings = button.data('servings');
-    var cookTime = button.data('cook-time');
+          var servings = button.data('servings');
+          var cookTime = button.data('cook-time');
 
-    modal.find('#servings').text(servings);
-    modal.find('#cookTime').text(cookTime);
+          modal.find('#servings').text(servings);
+          modal.find('#cookTime').text(cookTime);
 
-    // Display ingredients in an unordered list
-    var ingredientsHtml = '<ul>';
-    ingredients.forEach(function (ingredient, index) {
-      ingredientsHtml += '<li>' + ingredient + '</li>';
-    });
-    ingredientsHtml += '</ul>';
-    modal.find('#ingredients').html(ingredientsHtml);
+          // Display ingredients in an unordered list
+          var ingredientsHtml = '<ul>';
+          ingredients.forEach(function(ingredient, index) {
+            ingredientsHtml += '<li>' + ingredient + '</li>';
+          });
+          ingredientsHtml += '</ul>';
+          modal.find('#ingredients').html(ingredientsHtml);
 
-    // Display instructions in an ordered list
-    var instructionsHtml = '<ol>';
-    instructions.forEach(function (instruction, index) {
-      instructionsHtml += '<li>' + instruction + '</li>';
-    });
-    instructionsHtml += '</ol>';
-    modal.find('#instructions').html(instructionsHtml);
-  });
+          // Display instructions in an ordered list
+          var instructionsHtml = '<ol>';
+          instructions.forEach(function(instruction, index) {
+            instructionsHtml += '<li>' + instruction + '</li>';
+          });
+          instructionsHtml += '</ol>';
+          modal.find('#instructions').html(instructionsHtml);
+        });
       });
     </script>
 

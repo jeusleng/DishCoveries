@@ -404,7 +404,7 @@ exports.approveRecipe = async (req, res) => {
       }
 
       // res.status(200).json({ message: 'Recipe approved successfully' });
-      req.flash('success', 'Recipe has been Approved!');
+      req.flash('success', 'Recipe has been approved!');
       res.redirect('/recipeRequests');
     });
   } catch (error) {
@@ -416,7 +416,7 @@ exports.approveRecipe = async (req, res) => {
 exports.rejectRecipe = async (req, res) => {
   try {
     const recipeId = req.params.id;
-    const rejectReason = req.body.rejectReason; // Get the reject reason from the request body
+    const rejectReason = req.body.rejectReason;
     console.log('Reject Reason:', rejectReason);
     const updateQuery = 'UPDATE recipes SET status = ?, rejectReason = ? WHERE id = ?';
 
@@ -426,11 +426,13 @@ exports.rejectRecipe = async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
-
-
-      req.flash('success', 'Recipe has been Rejected!');
+    
+      console.log('Update Results:', results); // Log the results to check if the update was successful
+    
+      req.flash('success', 'Recipe has been rejected.');
       res.redirect('/recipeRequests');
     });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

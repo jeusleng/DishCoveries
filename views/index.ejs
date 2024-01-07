@@ -98,7 +98,7 @@
         <div class="col-md-12">
           <div class="featured">
             <div class="row">
-              <% recipes.forEach(recipe => { %>
+              <% recipes.slice(0, 4).forEach(recipe => { %>
                 <div class="col-md-3">
                   <div class="featured-menus ftco-animate">
                     <div class="menu-img img" style="background-image: url('/uploads/<%= recipe.recipeImage %>');"></div>
@@ -115,6 +115,7 @@
       </div>
     </div>
   </section>
+  
   
   
 
