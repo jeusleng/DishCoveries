@@ -92,6 +92,18 @@
                   </div>
                 </div>
 
+                <!-- Add a new div for messages -->
+                <div id="flashMessages" class="container mt-3">
+                  <% if (messages && messages.success) { %>
+                    <div class="alert alert-success">
+                      <%= messages.success %>
+                    </div>
+                    <% } else if (messages && messages.error) { %>
+                      <div class="alert alert-danger">
+                        <%= messages.error %>
+                      </div>
+                      <% } %>
+                </div>
                 <div id="recipeCardsContainer"
                   class="row no-gutters d-flex align-items-stretch justify-content-center align-items-center">
                   <% if (recipes.length===0) { %>
@@ -317,40 +329,50 @@
 
 
     $(document).ready(function () {
-      // Attach click event handler to the bookmark button
-      $('.bookmark-btn').click(function (e) {
-        e.preventDefault();
+  // Attach click event handler to the bookmark button
+  $('.bookmark-btn').click(function (e) {
+    e.preventDefault();
 
-        // Get the recipe ID from the data-recipe-id attribute
-        var recipeID = $(this).data('recipe-id');
+    // Get the recipe ID from the data-recipe-id attribute
+    var recipeID = $(this).data('recipe-id');
 
-        // Get the recipe name from the card (assuming it's in a specific element, adjust as needed)
-        var recipeName = $(this).closest('.recipe-card').find('.recipe-name').text().trim();
+    // Get the recipe name from the card (assuming it's in a specific element, adjust as needed)
+    var recipeName = $(this).closest('.recipe-card').find('.recipe-name').text().trim();
 
-        // Send an AJAX request to the server
-        $.ajax({
-          url: '/addBookmark',
-          method: 'POST',
-          data: {
-            recipeName: recipeName
-          },
-          success: function (response) {
-            // Handle the response from the server
-            console.log(response);
-            if (response.success) {
-              // Update the UI or provide feedback to the user
-              console.log('Bookmark added successfully');
-            } else {
-              console.error('Failed to add bookmark');
-            }
-          },
-          error: function (error) {
-            // Handle the error
-            console.error(error);
-          }
-        });
-      });
+    // Send an AJAX request to the server
+    $.ajax({
+      url: '/addBookmark',
+      method: 'POST',
+      data: {
+        recipeName: recipeName
+      },
+      success: function (response) {
+        // Handle the response from the server
+        console.log(response);
+        if (response.alreadyBookmarked) {
+          // Update the UI or provide feedback to the user
+          console.log('Recipe already bookmarked');
+          // Display warning message in red
+          $('#flashMessages').html('<div class="alert alert-danger">' + response.warning + '</div>');
+        } else if (response.success) {
+          // Update the UI or provide feedback to the user
+          console.log('Bookmark added successfully');
+          // Display success message
+          $('#flashMessages').html('<div class="alert alert-success">' + response.success + '</div>');
+        } else {
+          console.error('Failed to add bookmark');
+          // Display error message
+          $('#flashMessages').html('<div class="alert alert-danger">' + response.error + '</div>');
+        }
+      },
+      error: function (error) {
+        // Handle the error
+        console.error(error);
+      }
     });
+  })
+});
+
 
     // Get the recipe cards container
     var recipeCardsContainer = $('#recipeCardsContainer');

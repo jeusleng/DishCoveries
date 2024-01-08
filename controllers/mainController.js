@@ -494,7 +494,6 @@ exports.getMyBookmarks = (req, res) => {
   });
 };
 
-
 exports.addbookMarkRecipe = (req, res) => {
   const user = req.session.user;
 
@@ -503,7 +502,7 @@ exports.addbookMarkRecipe = (req, res) => {
   }
 
   const { recipeName } = req.body;
-  
+
   const checkBookmarkQuery = `
     SELECT bookmarks.id
     FROM bookmarks
@@ -518,8 +517,10 @@ exports.addbookMarkRecipe = (req, res) => {
     }
 
     if (checkResults.length > 0) {
-      return res.status(400).json({ success: false, error: 'Recipe already bookmarked' });
+      // Recipe is already bookmarked
+      return res.json({ success: false, alreadyBookmarked: true, warning: 'Recipe Already Bookmarked' });
     }
+
 
     const selectQuery = 'SELECT id FROM recipes WHERE recipeName = ?';
 
@@ -544,7 +545,7 @@ exports.addbookMarkRecipe = (req, res) => {
           return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
 
-        res.json({ success: true });
+        res.json({ success: 'Bookmarked Successfully', alreadyBookmarked: false, warning: 'Recipe Already Bookmarked' });
       });
     });
   });
